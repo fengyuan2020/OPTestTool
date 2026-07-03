@@ -1749,7 +1749,6 @@
             // 
             // Btn_WriteString
             // 
-            Btn_WriteString.Enabled = false;
             Btn_WriteString.Location = new Point(396, 60);
             Btn_WriteString.Name = "Btn_WriteString";
             Btn_WriteString.Size = new Size(89, 27);
@@ -1760,7 +1759,6 @@
             // 
             // Btn_WriteDouble
             // 
-            Btn_WriteDouble.Enabled = false;
             Btn_WriteDouble.Location = new Point(285, 60);
             Btn_WriteDouble.Name = "Btn_WriteDouble";
             Btn_WriteDouble.Size = new Size(89, 27);
@@ -1771,7 +1769,6 @@
             // 
             // Btn_WriteFloat
             // 
-            Btn_WriteFloat.Enabled = false;
             Btn_WriteFloat.Location = new Point(174, 60);
             Btn_WriteFloat.Name = "Btn_WriteFloat";
             Btn_WriteFloat.Size = new Size(89, 27);
@@ -1782,7 +1779,6 @@
             // 
             // Btn_WriteInt
             // 
-            Btn_WriteInt.Enabled = false;
             Btn_WriteInt.Location = new Point(63, 60);
             Btn_WriteInt.Name = "Btn_WriteInt";
             Btn_WriteInt.Size = new Size(89, 27);
@@ -1836,7 +1832,6 @@
             // 
             // Btn_ReadString
             // 
-            Btn_ReadString.Enabled = false;
             Btn_ReadString.Location = new Point(396, 60);
             Btn_ReadString.Name = "Btn_ReadString";
             Btn_ReadString.Size = new Size(89, 27);
@@ -1847,7 +1842,6 @@
             // 
             // Btn_ReadDouble
             // 
-            Btn_ReadDouble.Enabled = false;
             Btn_ReadDouble.Location = new Point(285, 60);
             Btn_ReadDouble.Name = "Btn_ReadDouble";
             Btn_ReadDouble.Size = new Size(89, 27);
@@ -1858,7 +1852,6 @@
             // 
             // Btn_ReadFloat
             // 
-            Btn_ReadFloat.Enabled = false;
             Btn_ReadFloat.Location = new Point(174, 60);
             Btn_ReadFloat.Name = "Btn_ReadFloat";
             Btn_ReadFloat.Size = new Size(89, 27);
@@ -1869,7 +1862,6 @@
             // 
             // Btn_ReadInt
             // 
-            Btn_ReadInt.Enabled = false;
             Btn_ReadInt.Location = new Point(63, 60);
             Btn_ReadInt.Name = "Btn_ReadInt";
             Btn_ReadInt.Size = new Size(89, 27);

@@ -420,7 +420,7 @@ namespace OPTestTool
             }
             else
             {
-                var nHwnd = string.IsNullOrEmpty(Txt_WindowHwnd.Text) ? 0 : int.Parse(Txt_WindowHwnd.Text);
+                var nHwnd = string.IsNullOrEmpty(Txt_WindowHwnd.Text) ? 0 : IntPtr.Parse(Txt_WindowHwnd.Text);
                 if (CheckBox_BindMoveWendow.Checked)
                     opSoft.MoveWindow(nHwnd, -10, 0); //OP发送的SetWindowPos(-10,0,W,H,28)  大漠的是SetWindowPos(-10,0,0,0,21)
                 Logger.Log(string.Format(">>>BindWindow\n{0},\"{1}\",\"{2}\",\"{3}\",{4}", nHwnd, Txt_BindDisplayMode.Text, Txt_BindMouseMode.Text, Txt_BindKeypadMode.Text, Txt_BindMode.Text));
@@ -484,7 +484,7 @@ namespace OPTestTool
         {
             var finder = (WindowFinder.LocationFinder)sender;
             int x = finder.MousePos.X, y = finder.MousePos.Y;
-            if (opSoft.IsBind() == 1 && opSoft.GetBindWindow() != (int)Win32.GetDesktopWindow())
+            if (opSoft.IsBind() == 1 && opSoft.GetBindWindow() != Win32.GetDesktopWindow())
                 opSoft.ScreenToClient(opSoft.GetBindWindow(), ref x, ref y);
             Txt_GetColorX.Text = x.ToString();
             Txt_GetColorY.Text = y.ToString();
@@ -575,7 +575,7 @@ namespace OPTestTool
         {
             var finder = (WindowFinder.LocationFinder)sender;
             int x = finder.MousePos.X, y = finder.MousePos.Y;
-            if (opSoft.IsBind() == 1 && opSoft.GetBindWindow() != (int)Win32.GetDesktopWindow())
+            if (opSoft.IsBind() == 1 && opSoft.GetBindWindow() != Win32.GetDesktopWindow())
                 opSoft.ScreenToClient(opSoft.GetBindWindow(), ref x, ref y);
             Txt_MoveToX.Text = x.ToString();
             Txt_MoveToY.Text = y.ToString();
@@ -832,7 +832,7 @@ namespace OPTestTool
 
             string sendText = Txt_SendText.Text;
             Logger.Log(string.Format(">>>SendStringIme {0},{1}", opSoft.GetBindWindow(), sendText));
-            int reault = opSoft.SendStringIme(opSoft.GetBindWindow(), sendText);
+            var reault = opSoft.SendStringIme(opSoft.GetBindWindow(), sendText);
             Logger.Log("返回值：" + reault);
         }
         private void Btn_SendPaste_Click(object sender, EventArgs e)
@@ -853,32 +853,54 @@ namespace OPTestTool
             DialogResult dialogResult = form.ShowDialog();
             if (dialogResult != DialogResult.OK)
                 return;
+            int type = 0;
             switch (form.GetSelect())
             {
                 case "+64": //64位有符号
+                    type = 3;
                     break;
                 case "+32": //32位有符号
-                    break;
-                case "-32": //32位无符号
+                    type = 0;
                     break;
                 case "+16": //16位有符号
-                    break;
-                case "-16": //16位无符号
+                    type = 1;
                     break;
                 case "+8": //8位有符号
+                    type = 2;
+                    break;
+                case "-32": //32位无符号
+                    type = 4;
+                    break;
+                case "-16": //16位无符号
+                    type = 5;
                     break;
                 case "-8": //8位无符号
+                    type = 6;
                     break;
                 default:
                     throw new KeyNotFoundException(form.GetSelect());
             }
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_ReadAddress.Text;
+            Logger.Log(string.Format(">>>ReadInt {0},\"{1}\",{2}", wind, address, type));
+            var reault = opSoft.ReadInt(wind, address, type);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_ReadFloat_Click(object sender, EventArgs e)
         {
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_ReadAddress.Text;
+            Logger.Log(string.Format(">>>ReadFloat {0},\"{1}\"", wind, address));
+            var reault = opSoft.ReadFloat(wind, address);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_ReadDouble_Click(object sender, EventArgs e)
         {
-
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_ReadAddress.Text;
+            Logger.Log(string.Format(">>>ReadDouble {0},\"{1}\"", wind, address));
+            var reault = opSoft.ReadDouble(wind, address);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_ReadString_Click(object sender, EventArgs e)
         {
@@ -886,9 +908,14 @@ namespace OPTestTool
             DialogResult dialogResult = form.ShowDialog();
             if (dialogResult != DialogResult.OK)
                 return;
-            string encodingStr = form.GetSelect();
             int length = form.Length;
-            var encoding = Encoding.GetEncoding(encodingStr);
+            var encodingType = int.Parse(form.GetSelect());
+
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_ReadAddress.Text;
+            Logger.Log(string.Format(">>>ReadString {0},\"{1}\",{2},{3}", wind, address, encodingType, length));
+            var reault = opSoft.ReadString(wind, address, encodingType, length);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_ReadData_Click(object sender, EventArgs e)
         {
@@ -897,8 +924,10 @@ namespace OPTestTool
             if (dialogResult != DialogResult.OK)
                 return;
             int length = form.Length;
-            Logger.Log(string.Format(">>>ReadData {0},\"{1}\",{2}", opSoft.GetBindWindow(), Txt_ReadAddress.Text, length));
-            string reault = opSoft.ReadData(opSoft.GetBindWindow(), Txt_ReadAddress.Text, length);
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_ReadAddress.Text;
+            Logger.Log(string.Format(">>>ReadData {0},\"{1}\",{2}", wind, address, length));
+            var reault = opSoft.ReadData(wind, address, length);
             Logger.Log("返回值：" + reault);
         }
         private void Btn_WriteInt_Click(object sender, EventArgs e)
@@ -907,19 +936,38 @@ namespace OPTestTool
             DialogResult dialogResult = form.ShowDialog();
             if (dialogResult != DialogResult.OK)
                 return;
+            int type = 0;
             switch (form.GetSelect())
             {
                 case "+64": //64位有符号
+                    type = 3;
                     break;
                 case "+32": //32位有符号
+                    type = 0;
                     break;
                 case "+16": //16位有符号
+                    type = 1;
                     break;
                 case "+8": //8位有符号
+                    type = 2;
+                    break;
+                case "-32": //32位无符号
+                    type = 4;
+                    break;
+                case "-16": //16位无符号
+                    type = 5;
+                    break;
+                case "-8": //8位无符号
+                    type = 6;
                     break;
                 default:
                     throw new KeyNotFoundException(form.GetSelect());
             }
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_WriteAddress.Text;
+            Logger.Log(string.Format(">>>WriteInt {0},\"{1}\",{2},{3}", wind, address, type, form.Number));
+            var reault = opSoft.WriteInt(wind, address, type, form.Number);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_WriteFloat_Click(object sender, EventArgs e)
         {
@@ -928,6 +976,11 @@ namespace OPTestTool
             if (dialogResult != DialogResult.OK)
                 return;
             float value = form.Context();
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_WriteAddress.Text;
+            Logger.Log(string.Format(">>>WriteFloat {0},\"{1}\",{2}", wind, address, value));
+            var reault = opSoft.WriteFloat(wind, address, value);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_WriteDouble_Click(object sender, EventArgs e)
         {
@@ -936,6 +989,11 @@ namespace OPTestTool
             if (dialogResult != DialogResult.OK)
                 return;
             double value = form.Context();
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_WriteAddress.Text;
+            Logger.Log(string.Format(">>>WriteDouble {0},\"{1}\",{2}", wind, address, value));
+            var reault = opSoft.WriteDouble(wind, address, value);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_WriteString_Click(object sender, EventArgs e)
         {
@@ -943,9 +1001,13 @@ namespace OPTestTool
             DialogResult dialogResult = form.ShowDialog();
             if (dialogResult != DialogResult.OK)
                 return;
-            string encodingStr = form.GetSelect();
             string context = form.Context;
-            var encoding = Encoding.GetEncoding(encodingStr);
+            var encodingType = int.Parse(form.GetSelect());
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_WriteAddress.Text;
+            Logger.Log(string.Format(">>>WriteDouble {0},\"{1}\",{2},\"{3}\"", wind, address, encodingType, context));
+            var reault = opSoft.WriteString(wind, address, encodingType, context);
+            Logger.Log("返回值：" + reault);
         }
         private void Btn_WriteData_Click(object sender, EventArgs e)
         {
@@ -954,8 +1016,10 @@ namespace OPTestTool
             if (dialogResult != DialogResult.OK)
                 return;
             string context = form.Context;
-            Logger.Log(string.Format(">>>WriteData {0},\"{1}\",{2},{3}", opSoft.GetBindWindow(), Txt_ReadAddress.Text, context, context.Length));
-            int reault = opSoft.WriteData(opSoft.GetBindWindow(), Txt_ReadAddress.Text, context, context.Length);
+            var wind = opSoft.GetBindWindow();
+            string address = Txt_WriteAddress.Text;
+            Logger.Log(string.Format(">>>WriteData {0},\"{1}\",{2},{3}", wind, address, context, context.Length));
+            var reault = opSoft.WriteData(wind, address, context, context.Length);
             Logger.Log("返回值：" + reault);
         }
         #endregion

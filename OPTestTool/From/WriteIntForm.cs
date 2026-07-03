@@ -19,7 +19,7 @@ namespace OPTestTool
             }
             return string.Empty;
         }
-        public int Length => int.Parse(Txt_Number.Text);
+        public long Number => long.Parse(Txt_Number.Text);
 
         private void LabelInt_MouseDown(object sender, MouseEventArgs e) => Utils.LabelInt_MouseDown(sender, e);
         private void LabelInt_MouseMove(object sender, MouseEventArgs e) => Utils.LabelInt_MouseMove(sender, e);

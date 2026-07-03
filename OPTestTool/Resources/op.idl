@@ -25,12 +25,12 @@ import "ocidl.idl";
 
 [
 	object,
-	uuid(51e59a6f-85f4-4da0-a01e-c9b6b3b8b8a7),
+	uuid(85f31925-b7ce-4e26-918e-082893bde6ff),
 	dual,
 	nonextensible,
 	pointer_default(unique)
 ]
-interface IOpInterface : IDispatch
+interface IOpAutomation : IDispatch
 {
 	//base config 1-19
 	[id(1)] HRESULT Ver([out, retval] BSTR* ret);
@@ -44,52 +44,54 @@ interface IOpInterface : IDispatch
 	[id(9)] HRESULT InjectDll([in] BSTR process_name, [in] BSTR dll_name, [out, retval] LONG* ret);
 	[id(10)] HRESULT EnablePicCache([in] LONG enable, [out, retval] LONG* ret);
 	[id(11)] HRESULT CapturePre([in]BSTR file_name, [out, retval] LONG* ret);
+	[id(12)] HRESULT SetScreenDataMode([in] LONG mode, [out, retval] LONG* ret);
 	//algorithm 20-49
 	[id(20)] HRESULT AStarFindPath([in] LONG mapWidth, [in] LONG mapHeight, [in] BSTR disable_points, [in] LONG beginX, [in] LONG beginY, [in] LONG endX, [in] LONG endY, [out, retval] BSTR* path);
 	[id(21)] HRESULT FindNearestPos([in] BSTR all_pos, [in] LONG type, [in] LONG x, [in] LONG y, [out, retval] BSTR* retstr);
 	//windows api 50-99
-	[id(58)] HRESULT EnumWindow([in] LONG parent, [in] BSTR title, [in] BSTR class_name, [in] LONG filter, [out, retval] BSTR* retstr);
+	[id(58)] HRESULT EnumWindow([in] hyper parent, [in] BSTR title, [in] BSTR class_name, [in] LONG filter, [out, retval] BSTR* retstr);
 	[id(59)] HRESULT EnumWindowByProcess([in] BSTR process_name, [in] BSTR title, [in] BSTR class_name, [in] LONG filter, [out, retval] BSTR* retstring);
 	[id(60)] HRESULT EnumProcess([in] BSTR name, [out, retval] BSTR* retstring);
-	[id(61)] HRESULT ClientToScreen([in] LONG ClientToScreen, [in, out] VARIANT* x, [in, out] VARIANT* y, [out, retval] LONG* bret);
-	[id(62)] HRESULT FindWindow([in] BSTR class_name, [in] BSTR title, [out, retval] LONG* rethwnd);
-	[id(63)] HRESULT FindWindowByProcess([in] BSTR process_name, [in] BSTR class_name, [in] BSTR title, [out, retval] LONG* rethwnd);
-	[id(64)] HRESULT FindWindowByProcessId([in] LONG process_id, [in] BSTR class_name, [in] BSTR title, [out, retval] LONG* rethwnd);
-	[id(65)] HRESULT FindWindowEx([in] LONG parent, [in] BSTR class_name, [in] BSTR title, [out, retval] LONG* rethwnd);
-	[id(66)] HRESULT GetClientRect([in] LONG hwnd, [out] VARIANT* x1, [out] VARIANT* y1, [out] VARIANT* x2, [out] VARIANT* y2, [out, retval] LONG* nret);
-	[id(67)] HRESULT GetClientSize([in] LONG hwnd, [out] VARIANT* width, [out] VARIANT* height, [out, retval] LONG* nret);
-	[id(68)] HRESULT GetForegroundFocus([out, retval] LONG* rethwnd);
-	[id(69)] HRESULT GetForegroundWindow([out, retval] LONG* rethwnd);
-	[id(70)] HRESULT GetMousePointWindow([out, retval] LONG* rethwnd);
-	[id(71)] HRESULT GetPointWindow([in] LONG x, [in] LONG y, [out, retval] LONG* rethwnd);
+	[id(61)] HRESULT ClientToScreen([in] hyper hwnd, [in, out] VARIANT* x, [in, out] VARIANT* y, [out, retval] LONG* bret);
+	[id(62)] HRESULT FindWindow([in] BSTR class_name, [in] BSTR title, [out, retval] hyper* rethwnd);
+	[id(63)] HRESULT FindWindowByProcess([in] BSTR process_name, [in] BSTR class_name, [in] BSTR title, [out, retval] hyper* rethwnd);
+	[id(64)] HRESULT FindWindowByProcessId([in] LONG process_id, [in] BSTR class_name, [in] BSTR title, [out, retval] hyper* rethwnd);
+	[id(65)] HRESULT FindWindowEx([in] hyper parent, [in] BSTR class_name, [in] BSTR title, [out, retval] hyper* rethwnd);
+	[id(66)] HRESULT GetClientRect([in] hyper hwnd, [out] VARIANT* x1, [out] VARIANT* y1, [out] VARIANT* x2, [out] VARIANT* y2, [out, retval] LONG* nret);
+	[id(67)] HRESULT GetClientSize([in] hyper hwnd, [out] VARIANT* width, [out] VARIANT* height, [out, retval] LONG* nret);
+	[id(68)] HRESULT GetForegroundFocus([out, retval] hyper* rethwnd);
+	[id(69)] HRESULT GetForegroundWindow([out, retval] hyper* rethwnd);
+	[id(70)] HRESULT GetMousePointWindow([out, retval] hyper* rethwnd);
+	[id(71)] HRESULT GetPointWindow([in] LONG x, [in] LONG y, [out, retval] hyper* rethwnd);
 	[id(72)] HRESULT GetProcessInfo([in] LONG pid, [out, retval] BSTR* retstring);
-	[id(73)] HRESULT GetSpecialWindow([in] LONG flag, [out, retval] LONG* rethwnd);
-	[id(74)] HRESULT GetWindow([in] LONG hwnd, [in] LONG flag, [out, retval] LONG* nret);
-	[id(75)] HRESULT GetWindowClass([in] LONG hwnd, [out, retval] BSTR* retstring);
-	[id(76)] HRESULT GetWindowProcessId([in] LONG hwnd, [out, retval] LONG* nretpid);
-	[id(77)] HRESULT GetWindowProcessPath([in] LONG hwnd, [out, retval] BSTR* retstring);
-	[id(78)] HRESULT GetWindowRect([in] LONG hwnd, [out] VARIANT* x1, [out] VARIANT* y1, [out] VARIANT* x2, [out] VARIANT* y2, [out, retval] LONG* nret);
-	[id(79)] HRESULT GetWindowState([in] LONG hwnd, [in] LONG flag, [out, retval] LONG* rethwnd);
-	[id(80)] HRESULT GetWindowTitle([in] LONG hwnd, [out, retval] BSTR* rettitle);
-	[id(81)] HRESULT MoveWindow([in] LONG hwnd, [in] LONG x, [in] LONG y, [out, retval] LONG* nret);
-	[id(82)] HRESULT ScreenToClient([in] LONG hwnd, [in, out] VARIANT* x, [in, out] VARIANT* y, [out, retval] LONG* nret);
-	[id(83)] HRESULT SendPaste([in] LONG hwnd, [out, retval] LONG* nret);
-	[id(84)] HRESULT SetClientSize([in] LONG hwnd, [in] LONG width, [in] LONG hight, [out, retval] LONG* nret);
-	[id(85)] HRESULT SetWindowState([in] LONG hwnd, [in] LONG flag, [out, retval] LONG* nret);
-	[id(86)] HRESULT SetWindowSize([in] LONG hwnd, [in] LONG width, [in] LONG height, [out, retval] LONG* nret);
-	[id(87)] HRESULT SetWindowText([in] LONG hwnd, [in] BSTR title, [out, retval] LONG* nret);
-	[id(88)] HRESULT SetWindowTransparent([in] LONG hwnd, [in] LONG trans, [out, retval] LONG* nret);
-	[id(89)] HRESULT SendString([in] LONG hwnd, [in] BSTR str, [out, retval] LONG* ret);
-	[id(90)] HRESULT SendStringIme([in] LONG hwnd, [in] BSTR str, [out, retval] LONG* ret);
-	[id(91)] HRESULT RunApp([in] BSTR cmdline, [in] LONG mode, [out, retval] LONG* ret);
+	[id(73)] HRESULT GetSpecialWindow([in] LONG flag, [out, retval] hyper* rethwnd);
+	[id(74)] HRESULT GetWindow([in] hyper hwnd, [in] LONG flag, [out, retval] hyper* nret);
+	[id(75)] HRESULT GetWindowClass([in] hyper hwnd, [out, retval] BSTR* retstring);
+	[id(76)] HRESULT GetWindowProcessId([in] hyper hwnd, [out, retval] LONG* nretpid);
+	[id(77)] HRESULT GetWindowProcessPath([in] hyper hwnd, [out, retval] BSTR* retstring);
+	[id(78)] HRESULT GetWindowRect([in] hyper hwnd, [out] VARIANT* x1, [out] VARIANT* y1, [out] VARIANT* x2, [out] VARIANT* y2, [out, retval] LONG* nret);
+	[id(79)] HRESULT GetWindowState([in] hyper hwnd, [in] LONG flag, [out, retval] LONG* rethwnd);
+	[id(80)] HRESULT GetWindowTitle([in] hyper hwnd, [out, retval] BSTR* rettitle);
+	[id(81)] HRESULT MoveWindow([in] hyper hwnd, [in] LONG x, [in] LONG y, [out, retval] LONG* nret);
+	[id(82)] HRESULT ScreenToClient([in] hyper hwnd, [in, out] VARIANT* x, [in, out] VARIANT* y, [out, retval] LONG* nret);
+	[id(83)] HRESULT SendPaste([in] hyper hwnd, [out, retval] LONG* nret);
+	[id(84)] HRESULT SetClientSize([in] hyper hwnd, [in] LONG width, [in] LONG hight, [out, retval] LONG* nret);
+	[id(85)] HRESULT SetWindowState([in] hyper hwnd, [in] LONG flag, [out, retval] LONG* nret);
+	[id(86)] HRESULT SetWindowSize([in] hyper hwnd, [in] LONG width, [in] LONG height, [out, retval] LONG* nret);
+	[id(87)] HRESULT SetWindowText([in] hyper hwnd, [in] BSTR title, [out, retval] LONG* nret);
+	[id(88)] HRESULT SetWindowTransparent([in] hyper hwnd, [in] LONG trans, [out, retval] LONG* nret);
+	[id(89)] HRESULT SendString([in] hyper hwnd, [in] BSTR str, [out, retval] LONG* ret);
+	[id(90)] HRESULT SendStringIme([in] hyper hwnd, [in] BSTR str, [out, retval] LONG* ret);
+	[id(91)] HRESULT RunApp([in] BSTR cmdline, [in] LONG mode, [out] ULONG* pid, [out, retval] LONG* ret);
+	[id(92)] HRESULT LayoutWindows([in] BSTR hwnds, [in] LONG layout_type, [in] LONG columns, [in] LONG start_x, [in] LONG start_y, [in] LONG gap_x, [in] LONG gap_y, [in] LONG size_mode, [in] LONG window_width, [in] LONG window_height, [in] LONG anchor_mode, [out, retval] LONG* ret);
 	[id(95)] HRESULT WinExec([in] BSTR cmdline, [in] LONG cmdshow, [out, retval] LONG* ret);
 	[id(96)] HRESULT GetCmdStr([in] BSTR cmd, [in] LONG millseconds, [out, retval] BSTR* retstr);
 	//background 100-119
-	[id(100)] HRESULT BindWindow([in] LONG hwnd, [in] BSTR display, [in] BSTR mouse, [in] BSTR keypad, [in] LONG mode, [out, retval] LONG* ret);
+	[id(100)] HRESULT BindWindow([in] hyper hwnd, [in] BSTR display, [in] BSTR mouse, [in] BSTR keypad, [in] LONG mode, [out, retval] LONG* ret);
 	[id(101)] HRESULT UnBindWindow([out, retval] LONG* ret);
-	[id(102)] HRESULT GetBindWindow([out, retval] LONG* ret);
+	[id(102)] HRESULT GetBindWindow([out, retval] hyper* ret);
 	[id(103)] HRESULT IsBind([out, retval] LONG* ret);
-	[id(104)] HRESULT BindWindowEx([in] LONG display_hwnd, [in] LONG input_hwnd, [in] BSTR display, [in] BSTR mouse, [in] BSTR keypad, [in] LONG mode, [out, retval] LONG* ret);
+	[id(104)] HRESULT BindWindowEx([in] hyper display_hwnd, [in] hyper input_hwnd, [in] BSTR display, [in] BSTR mouse, [in] BSTR keypad, [in] LONG mode, [out, retval] LONG* ret);
 	//mouse & ketboard 120-149
 	[id(120)] HRESULT GetCursorPos([out] VARIANT* x, [out] VARIANT* y, [out, retval] LONG* ret);
 	[id(121)] HRESULT MoveR([in] LONG x, [in] LONG y, [out, retval] LONG* ret);
@@ -121,6 +123,7 @@ interface IOpInterface : IDispatch
 	[id(141)] HRESULT WaitKey([in] LONG vk_code, [in] LONG time_out, [out, retval] LONG* ret);
 	[id(142)] HRESULT KeyPress([in] LONG vk_code, [out, retval] LONG* ret);
 	[id(143)] HRESULT KeyPressChar([in] BSTR vk_code, [out, retval] LONG* ret);
+	[id(144)] HRESULT GetCursorShape([out, retval] BSTR* ret);
 	//image & color 150-199
 	[id(150)] HRESULT Capture([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR file_name, [out, retval] LONG* ret);
 	[id(151)] HRESULT CmpColor([in] LONG x, [in] LONG y, [in] BSTR color, [in] DOUBLE sim, [out, retval] LONG* ret);
@@ -134,8 +137,6 @@ interface IOpInterface : IDispatch
 	[id(158)] HRESULT FindPicExS([in] LONG x1, [in]LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR files, [in] BSTR delta_color, [in] DOUBLE sim, [in] LONG dir, [out, retval] BSTR* retstr);
 	[id(159)] HRESULT FindColorBlock([in] LONG x1, [in]LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] LONG count, [in] LONG height, [in] LONG width, [out] VARIANT* x, [out] VARIANT* y, [out, retval] LONG* ret);
 	[id(160)] HRESULT FindColorBlockEx([in] LONG x1, [in]LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] LONG count, [in] LONG height, [in] LONG width, [out, retval] BSTR* retstr);
-	[id(161)] HRESULT GetResultCount([in] BSTR str, [out, retval] LONG* ret);
-	[id(162)] HRESULT GetResultPos([in] BSTR str, [in] LONG index, [out] VARIANT* x, [out] VARIANT* y, [out, retval] LONG* ret);
 
 	[id(163)] HRESULT GetColor([in] LONG x, [in] LONG y, [out, retval] BSTR* ret);
 	[id(164)] HRESULT SetDisplayInput([in] BSTR method, [out, retval] LONG* ret);
@@ -144,17 +145,18 @@ interface IOpInterface : IDispatch
 	[id(167)] HRESULT GetScreenData([in] LONG  x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [out, retval]LONG* ret);
 	[id(168)] HRESULT GetScreenDataBmp([in] LONG  x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [out] VARIANT* data, [out] VARIANT* size, [out, retval]LONG* ret);
 	[id(169)] HRESULT MatchPicName([in] BSTR pic_name, [out, retval] BSTR* retstr);
-	[id(170)] HRESULT LoadMemPic([in] BSTR pic_name, [in]long long data, [in]LONG size,[out, retval] LONG* ret);
+	[id(170)] HRESULT LoadMemPic([in] BSTR pic_name, [in]long long data, [in]LONG size, [out, retval] LONG* ret);
 	[id(171)] HRESULT SetMouseDelay([in] BSTR type, [in] LONG delay, [out, retval]LONG* ret);
 	[id(172)] HRESULT SetKeypadDelay([in] BSTR type, [in] LONG delay, [out, retval]LONG* ret);
-    [id(173)] HRESULT SetClipboard([in] BSTR str, [out, retval] LONG* ret);
-    [id(174)] HRESULT GetClipboard([out, retval] BSTR* ret);
-    [id(175)] HRESULT Delay([in] LONG mis, [out, retval] LONG* ret);
-    [id(176)] HRESULT Delays([in] LONG mis_min,[in] LONG mis_max, [out, retval] LONG* ret);
-	[id(177)] HRESULT KeyPressStr([in]BSTR key_str,[in]LONG delay,[out, retval] LONG* ret);
+	[id(173)] HRESULT SetClipboard([in] BSTR str, [out, retval] LONG* ret);
+	[id(174)] HRESULT GetClipboard([out, retval] BSTR* ret);
+	[id(175)] HRESULT Delay([in] LONG mis, [out, retval] LONG* ret);
+	[id(176)] HRESULT Delays([in] LONG mis_min, [in] LONG mis_max, [out, retval] LONG* ret);
+	[id(177)] HRESULT KeyPressStr([in]BSTR key_str, [in]LONG delay, [out, retval] LONG* ret);
 	[id(178)] HRESULT GetColorNum([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [out, retval]LONG* ret);
 	[id(179)] HRESULT GetPicSize([in] BSTR pic_name, [out] VARIANT* width, [out] VARIANT* height, [out, retval] LONG* ret);
-	
+	[id(180)] HRESULT GetScreenFrameInfo([out] LONG* frame_id, [out] LONG* time);
+
 	//ocr 200-230
 	[id(200)] HRESULT SetDict([in] LONG idx, [in] BSTR file_name, [out, retval] LONG* ret);
 	[id(201)] HRESULT UseDict([in] LONG idx, [out, retval] LONG* ret);
@@ -167,6 +169,9 @@ interface IOpInterface : IDispatch
 	[id(208)] HRESULT OcrAutoFromFile([in] BSTR file_name, [in] DOUBLE sim, [out, retval] BSTR* retstr);
 	[id(209)] HRESULT FindLine([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [out, retval] BSTR* retstr);
 	[id(210)] HRESULT SetOcrEngine([in] BSTR path_of_engine, [in] BSTR dll_name, [in] BSTR argv, [out, retval] LONG* ret);
+	[id(211)] HRESULT SetYoloEngine([in] BSTR path_of_engine, [in] BSTR dll_name, [in] BSTR argv, [out, retval] LONG* ret);
+	[id(212)] HRESULT YoloDetect([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] DOUBLE conf, [in] DOUBLE iou, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(213)] HRESULT YoloDetectFromFile([in] BSTR file_name, [in] DOUBLE conf, [in] DOUBLE iou, [out] BSTR* retjson, [out, retval] LONG* ret);
 	[id(220)] HRESULT SetMemDict([in] LONG idx, [in]BSTR data, [in]LONG size, [out, retval] LONG* ret);
 	[id(221)] HRESULT GetDict([in] LONG idx, [in] LONG font_index, [out, retval] BSTR* retstr);
 	[id(222)] HRESULT AddDict([in] LONG idx, [in] BSTR dict_info, [out, retval] LONG* ret);
@@ -180,14 +185,57 @@ interface IOpInterface : IDispatch
 	[id(230)] HRESULT GetWordResultPos([in] BSTR result, [in] LONG index, [out] VARIANT* x, [out] VARIANT* y, [out, retval] LONG* ret);
 	[id(231)] HRESULT GetWordResultStr([in] BSTR result, [in] LONG index, [out, retval] BSTR* retstr);
 
-	[id(250)] HRESULT WriteData([in] LONG hwnd, [in]BSTR address, [in] BSTR data, [in] LONG size, [out, retval] LONG* ret);
-	[id(251)] HRESULT ReadData([in] LONG hwnd, [in] BSTR address, [in] LONG size, [out, retval] BSTR* retstr);
+	[id(250)] HRESULT WriteData([in] hyper hwnd, [in]BSTR address, [in] BSTR data, [in] LONG size, [out, retval] LONG* ret);
+	[id(251)] HRESULT ReadData([in] hyper hwnd, [in] BSTR address, [in] LONG size, [out, retval] BSTR* retstr);
+	[id(252)] HRESULT ReadInt([in] hyper hwnd, [in] BSTR address, [in] LONG type, [out, retval] hyper* ret);
+	[id(253)] HRESULT WriteInt([in] hyper hwnd, [in] BSTR address, [in] LONG type, [in] hyper value, [out, retval] LONG* ret);
+	[id(254)] HRESULT ReadFloat([in] hyper hwnd, [in] BSTR address, [out, retval] DOUBLE* ret);
+	[id(255)] HRESULT WriteFloat([in] hyper hwnd, [in] BSTR address, [in] DOUBLE value, [out, retval] LONG* ret);
+	[id(256)] HRESULT ReadDouble([in] hyper hwnd, [in] BSTR address, [out, retval] DOUBLE* ret);
+	[id(257)] HRESULT WriteDouble([in] hyper hwnd, [in] BSTR address, [in] DOUBLE value, [out, retval] LONG* ret);
+	[id(258)] HRESULT ReadString([in] hyper hwnd, [in] BSTR address, [in] LONG type, [in] LONG len, [out, retval] BSTR* retstr);
+	[id(259)] HRESULT WriteString([in] hyper hwnd, [in] BSTR address, [in] LONG type, [in] BSTR value, [out, retval] LONG* ret);
+	[id(300)] HRESULT CvLoadTemplate([in] BSTR name, [in] BSTR file_path, [out, retval] LONG* ret);
+	[id(301)] HRESULT CvLoadMaskedTemplate([in] BSTR name, [in] BSTR template_path, [in] BSTR mask_path, [out, retval] LONG* ret);
+	[id(302)] HRESULT CvRemoveTemplate([in] BSTR name, [out, retval] LONG* ret);
+	[id(303)] HRESULT CvRemoveAllTemplates([out, retval] LONG* ret);
+	[id(304)] HRESULT CvHasTemplate([in] BSTR name, [out, retval] LONG* ret);
+	[id(305)] HRESULT CvGetTemplateCount([out, retval] LONG* ret);
+	[id(306)] HRESULT CvGetAllTemplateNames([out, retval] BSTR* retstr);
+	[id(307)] HRESULT CvGetOpenCvVersion([out, retval] BSTR* retstr);
+	[id(308)] HRESULT CvLoadTemplateList([in] BSTR template_list, [out, retval] LONG* ret);
+	[id(310)] HRESULT CvMatchTemplate([in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR template_name, [in] DOUBLE threshold, [in] LONG dir, [in] LONG strip_mode, [in] LONG method, [in] LONG color_mode, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(311)] HRESULT CvMatchTemplateScale([in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR template_name, [in] BSTR scales, [in] DOUBLE threshold, [in] LONG method, [in] LONG color_mode, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(312)] HRESULT CvMatchAnyTemplate([in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR template_names, [in] DOUBLE threshold, [in] LONG dir, [in] LONG strip_mode, [in] LONG method, [in] LONG color_mode, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(313)] HRESULT CvMatchAllTemplates([in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR template_names, [in] DOUBLE threshold, [in] LONG dir, [in] LONG strip_mode, [in] LONG method, [in] LONG color_mode, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(314)] HRESULT CvFeatureMatchTemplate([in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR template_name, [in] DOUBLE threshold, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(315)] HRESULT CvEdgeMatchTemplate([in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR template_name, [in] DOUBLE threshold, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(316)] HRESULT CvShapeMatchTemplate([in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR template_name, [in] DOUBLE threshold, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(317)] HRESULT CvToGray([in] BSTR src_file, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(318)] HRESULT CvCrop([in] BSTR src_file, [in] LONG x, [in] LONG y, [in] LONG width, [in] LONG height, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(319)] HRESULT CvResize([in] BSTR src_file, [in] LONG width, [in] LONG height, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(320)] HRESULT CvThreshold([in] BSTR src_file, [in] BSTR dst_file, [in] DOUBLE threshold, [in] DOUBLE max_value, [in] BSTR mode, [out, retval] LONG* ret);
+	[id(321)] HRESULT CvInRange([in] BSTR src_file, [in] BSTR dst_file, [in] BSTR color_space, [in] BSTR lower, [in] BSTR upper, [out, retval] LONG* ret);
+	[id(322)] HRESULT CvMorphology([in] BSTR src_file, [in] BSTR dst_file, [in] BSTR mode, [in] LONG kernel_size, [in] LONG iterations, [out, retval] LONG* ret);
+	[id(323)] HRESULT CvThin([in] BSTR src_file, [in] BSTR dst_file, [in] BSTR mode, [out, retval] LONG* ret);
+	[id(324)] HRESULT CvToBinary([in] BSTR src_file, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(325)] HRESULT CvToEdge([in] BSTR src_file, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(326)] HRESULT CvToOutline([in] BSTR src_file, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(327)] HRESULT CvDenoise([in] BSTR src_file, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(328)] HRESULT CvCropValid([in] BSTR src_file, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(329)] HRESULT CvEqualize([in] BSTR src_file, [in] BSTR dst_file, [out, retval] LONG* ret);
+	[id(330)] HRESULT CvCLAHE([in] BSTR src_file, [in] BSTR dst_file, [in] DOUBLE clip_limit, [in] LONG tile_grid_size, [out, retval] LONG* ret);
+	[id(331)] HRESULT CvBlur([in] BSTR src_file, [in] BSTR dst_file, [in] BSTR mode, [in] LONG kernel_size, [out, retval] LONG* ret);
+	[id(332)] HRESULT CvSharpen([in] BSTR src_file, [in] BSTR dst_file, [in] DOUBLE strength, [out, retval] LONG* ret);
+	[id(333)] HRESULT CvConnectedComponents([in] BSTR src_file, [in] DOUBLE min_area, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(334)] HRESULT CvFindContours([in] BSTR src_file, [in] DOUBLE min_area, [out] BSTR* retjson, [out, retval] LONG* ret);
+	[id(335)] HRESULT CvPreprocessPipeline([in] BSTR src_file, [in] BSTR dst_file, [in] BSTR pipeline, [out, retval] LONG* ret);
 
 
 
 };
 [
-	uuid(66b9c175-82f2-45e9-af86-58ad5ded5adc),
+	uuid(40297cce-e4de-4d31-acfb-81bb8d14d261),
 	version(1.0),
 	custom(a817e7a1-43fa-11d0-9e44-00aa00b6770a, "{54ca0535-fb49-4d91-8709-786fb8725132}")
 ]
@@ -202,12 +250,13 @@ library opLib
 		[default] interface IComponentRegistrar;
 	};*/
 	[
-		uuid(12bec402-a06e-4fad-a7d4-830f967374c6)
+		uuid(6d0fe2a0-f265-4961-9f92-ec22b64fb80c)
 	]
-	coclass OpInterface
+	coclass OpAutomation
 	{
-		[default] interface IOpInterface;
+		[default] interface IOpAutomation;
 	};
 };
 
 import "shobjidl.idl";
+

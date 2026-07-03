@@ -35,31 +35,32 @@
             label1 = new Label();
             label2 = new Label();
             Txt_Length = new TextBox();
+            radioButton2 = new RadioButton();
             SuspendLayout();
             // 
             // radioButton3
             // 
             radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(186, 26);
+            radioButton3.Location = new Point(117, 34);
             radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(74, 21);
+            radioButton3.Size = new Size(60, 21);
             radioButton3.TabIndex = 2;
             radioButton3.TabStop = true;
-            radioButton3.Tag = "utf-16";
-            radioButton3.Text = "Unicode";
+            radioButton3.Tag = "2";
+            radioButton3.Text = "UTF-8";
             radioButton3.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
             radioButton1.Checked = true;
-            radioButton1.Location = new Point(117, 26);
+            radioButton1.Location = new Point(117, 9);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(51, 21);
+            radioButton1.Size = new Size(79, 21);
             radioButton1.TabIndex = 1;
             radioButton1.TabStop = true;
-            radioButton1.Tag = "gbk";
-            radioButton1.Text = "GBK";
+            radioButton1.Tag = "0";
+            radioButton1.Text = "ACP/GBK";
             radioButton1.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -68,7 +69,7 @@
             button1.Location = new Point(77, 101);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
-            button1.TabIndex = 10;
+            button1.TabIndex = 6;
             button1.Text = "确定";
             button1.UseVisualStyleBackColor = true;
             // 
@@ -78,14 +79,14 @@
             button2.Location = new Point(168, 101);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
-            button2.TabIndex = 11;
+            button2.TabIndex = 7;
             button2.Text = "取消";
             button2.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(66, 28);
+            label1.Location = new Point(76, 9);
             label1.Name = "label1";
             label1.Size = new Size(35, 17);
             label1.TabIndex = 0;
@@ -95,10 +96,10 @@
             // 
             label2.AutoSize = true;
             label2.Cursor = Cursors.SizeWE;
-            label2.Location = new Point(66, 64);
+            label2.Location = new Point(76, 64);
             label2.Name = "label2";
             label2.Size = new Size(35, 17);
-            label2.TabIndex = 3;
+            label2.TabIndex = 4;
             label2.Tag = "Txt_Length";
             label2.Text = "长度:";
             label2.MouseDown += LabelUInt_MouseDown;
@@ -110,16 +111,29 @@
             Txt_Length.Location = new Point(117, 61);
             Txt_Length.Name = "Txt_Length";
             Txt_Length.Size = new Size(75, 23);
-            Txt_Length.TabIndex = 4;
+            Txt_Length.TabIndex = 5;
             Txt_Length.Text = "0";
             Txt_Length.TextChanged += TextBoxUInt_TextChanged;
             Txt_Length.KeyPress += TextBoxUInt_KeyPress;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(197, 34);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(67, 21);
+            radioButton2.TabIndex = 3;
+            radioButton2.TabStop = true;
+            radioButton2.Tag = "1";
+            radioButton2.Text = "UTF-16";
+            radioButton2.UseVisualStyleBackColor = true;
             // 
             // ReadStringForm
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(307, 144);
+            Controls.Add(radioButton2);
             Controls.Add(Txt_Length);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -145,5 +159,6 @@
         private Label label1;
         private Label label2;
         private TextBox Txt_Length;
+        private RadioButton radioButton2;
     }
 }

@@ -40,6 +40,15 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
         Dispose(true);
         GC.SuppressFinalize(this);
     }
+    private static string _PtrToString(IntPtr ptr)
+    {
+        if (ptr == IntPtr.Zero)
+            return string.Empty;
+        string str = Marshal.PtrToStringUni(ptr);
+        if (str == null)
+            return string.Empty;
+        return str;
+    }
     #endregion
     #region Overroid
     public override bool Equals(object obj) => obj is OpSoft soft && GetID() == soft.GetID();
@@ -69,7 +78,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="endY">目的坐标 Y</param>
     /// <returns>找到的路径结果</returns>
     public string AStarFindPath(int mapWidth, int mapHeight, string disable_points, int beginX, int beginY, int endX, int endY) 
-        => OpAStarFindPath(handle, mapWidth, mapHeight, disable_points, beginX, beginY, endX, endY);
+        => _PtrToString(OpAStarFindPath(handle, mapWidth, mapHeight, disable_points, beginX, beginY, endX, endY));
 
     /// <summary>
     /// 绑定指定的窗口,并指定这个窗口的屏幕颜色获取方式,鼠标仿真模式,键盘仿真模式,以及模式设定.
@@ -123,7 +132,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>返回合法条目数量。</returns>
     public string CheckWordDict(string dict_info, out int ret) 
-        => OpCheckWordDict(handle, dict_info, out ret);
+        => _PtrToString(OpCheckWordDict(handle, dict_info, out ret));
 
     /// <summary>
     /// 清空指定字库
@@ -184,7 +193,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败 1：成功</returns>
     public string CvConnectedComponents(string src_file, double min_area) 
-        => OpCvConnectedComponents(handle, src_file, min_area);
+        => _PtrToString(OpCvConnectedComponents(handle, src_file, min_area));
 
     /// <summary>
     /// 裁剪图片
@@ -229,7 +238,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败或未命中 1：成功命中</returns>
     public string CvEdgeMatchTemplate(int x, int y, int width, int height, string template_name, double threshold) 
-        => OpCvEdgeMatchTemplate(handle, x, y, width, height, template_name, threshold);
+        => _PtrToString(OpCvEdgeMatchTemplate(handle, x, y, width, height, template_name, threshold));
 
     /// <summary>
     /// 对图片进行直方图均衡
@@ -252,7 +261,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败或未命中 1：成功命中</returns>
     public string CvFeatureMatchTemplate(int x, int y, int width, int height, string template_name, double threshold) 
-        => OpCvFeatureMatchTemplate(handle, x, y, width, height, template_name, threshold);
+        => _PtrToString(OpCvFeatureMatchTemplate(handle, x, y, width, height, template_name, threshold));
 
     /// <summary>
     /// 变参指针: 返回轮廓结果 JSON
@@ -262,21 +271,21 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败 1：成功</returns>
     public string CvFindContours(string src_file, double min_area) 
-        => OpCvFindContours(handle, src_file, min_area);
+        => _PtrToString(OpCvFindContours(handle, src_file, min_area));
 
     /// <summary>
     /// 获取全部 OpenCV 模板名称
     /// </summary>
     /// <returns>返回以 <code>|</code> 分割的模板名称列表</returns>
     public string CvGetAllTemplateNames() 
-        => OpCvGetAllTemplateNames(handle);
+        => _PtrToString(OpCvGetAllTemplateNames(handle));
 
     /// <summary>
     /// 获取当前 OpenCV 版本
     /// </summary>
     /// <returns>返回 OpenCV 版本号</returns>
     public string CvGetOpenCvVersion() 
-        => OpCvGetOpenCvVersion(handle);
+        => _PtrToString(OpCvGetOpenCvVersion(handle));
 
     /// <summary>
     /// 获取已加载的 OpenCV 模板数量
@@ -348,7 +357,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败或无命中 1：有命中结果</returns>
     public string CvMatchAllTemplates(int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode) 
-        => OpCvMatchAllTemplates(handle, x, y, width, height, template_names, threshold, dir, strip_mode, method, color_mode);
+        => _PtrToString(OpCvMatchAllTemplates(handle, x, y, width, height, template_names, threshold, dir, strip_mode, method, color_mode));
 
     /// <summary>
     /// 变参指针: 返回匹配结果 JSON
@@ -366,7 +375,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败或未命中 1：成功命中</returns>
     public string CvMatchAnyTemplate(int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode) 
-        => OpCvMatchAnyTemplate(handle, x, y, width, height, template_names, threshold, dir, strip_mode, method, color_mode);
+        => _PtrToString(OpCvMatchAnyTemplate(handle, x, y, width, height, template_names, threshold, dir, strip_mode, method, color_mode));
 
     /// <summary>
     /// 变参指针: 返回匹配结果 JSON
@@ -384,7 +393,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败或未命中 1：成功命中</returns>
     public string CvMatchTemplate(int x, int y, int width, int height, string template_name, double threshold, int dir, int strip_mode, int method, int color_mode) 
-        => OpCvMatchTemplate(handle, x, y, width, height, template_name, threshold, dir, strip_mode, method, color_mode);
+        => _PtrToString(OpCvMatchTemplate(handle, x, y, width, height, template_name, threshold, dir, strip_mode, method, color_mode));
 
     /// <summary>
     /// 变参指针: 返回匹配结果 JSON
@@ -401,7 +410,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败或未命中 1：成功命中</returns>
     public string CvMatchTemplateScale(int x, int y, int width, int height, string template_name, string scales, double threshold, int method, int color_mode) 
-        => OpCvMatchTemplateScale(handle, x, y, width, height, template_name, scales, threshold, method, color_mode);
+        => _PtrToString(OpCvMatchTemplateScale(handle, x, y, width, height, template_name, scales, threshold, method, color_mode));
 
     /// <summary>
     /// 对图片进行形态学处理
@@ -463,7 +472,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：失败或未命中 1：成功命中</returns>
     public string CvShapeMatchTemplate(int x, int y, int width, int height, string template_name, double threshold) 
-        => OpCvShapeMatchTemplate(handle, x, y, width, height, template_name, threshold);
+        => _PtrToString(OpCvShapeMatchTemplate(handle, x, y, width, height, template_name, threshold));
 
     /// <summary>
     /// 对图片进行锐化处理
@@ -573,7 +582,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="name">进程名称</param>
     /// <returns>返回所有匹配的进程 PID,返回格式："10180,15352,15000,17620,19412"</returns>
     public string EnumProcess(string name) 
-        => OpEnumProcess(handle, name);
+        => _PtrToString(OpEnumProcess(handle, name));
 
     /// <summary>
     /// 根据指定条件,枚举系统中符合条件的窗口
@@ -584,7 +593,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="filter">窗口过滤条件，可使用下表中的值相加 1:匹配窗口标题，参数 title 有效 2:匹配窗口类名，参数 class_name 有效 4:只匹配指定父窗口的第一层子窗口 8:匹配所有者窗口为 0 的窗口，即顶级窗口 16:匹配可见的窗口 32:匹配出的窗口按照窗口打开顺序依次排列</param>
     /// <returns>返回所有匹配到的窗口句柄</returns>
     public string EnumWindow(IntPtr parent, string title, string class_name, int filter) 
-        => OpEnumWindow(handle, parent, title, class_name, filter);
+        => _PtrToString(OpEnumWindow(handle, parent, title, class_name, filter));
 
     /// <summary>
     /// 根据指定进程以及其它条件,枚举系统中符合条件的窗口
@@ -595,7 +604,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="filter">窗口过滤条件，可使用下表中的值相加 1:匹配窗口标题，参数 title 有效 2:匹配窗口类名，参数 class_name 有效 4:只匹配指定父窗口的第一层子窗口 8:匹配所有者窗口为 0 的窗口，即顶级窗口 16:匹配可见的窗口 32:匹配出的窗口按照窗口打开顺序依次排列</param>
     /// <returns>返回所有匹配到的窗口句柄</returns>
     public string EnumWindowByProcess(string process_name, string title, string class_name, int filter) 
-        => OpEnumWindowByProcess(handle, process_name, title, class_name, filter);
+        => _PtrToString(OpEnumWindowByProcess(handle, process_name, title, class_name, filter));
 
     /// <summary>
     /// 按颜色规则把指定区域里的点阵字块自动切出来。
@@ -609,7 +618,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="min_word_h">字块最小高度，小于等于 0 时按 2 处理</param>
     /// <returns>返回字块矩形列表，格式为 <code>x1,y1,x2,y2|...</code>。没有切出字块时返回空字符串。</returns>
     public string ExtractWordRects(int x1, int y1, int x2, int y2, string color, double sim, int min_word_h) 
-        => OpExtractWordRects(handle, x1, y1, x2, y2, color, sim, min_word_h);
+        => _PtrToString(OpExtractWordRects(handle, x1, y1, x2, y2, color, sim, min_word_h));
 
     /// <summary>
     /// 按最小宽高和边距自动切出点阵字块，适合截图里夹杂小噪点或字形贴边的情况。
@@ -625,7 +634,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="padding">给每个字块额外保留的边距，小于 0 时按 0 处理</param>
     /// <returns>返回字块矩形列表，格式为 <code>x1,y1,x2,y2|...</code>。</returns>
     public string ExtractWordRectsEx(int x1, int y1, int x2, int y2, string color, double sim, int min_word_w, int min_word_h, int padding) 
-        => OpExtractWordRectsEx(handle, x1, y1, x2, y2, color, sim, min_word_w, min_word_h, padding);
+        => _PtrToString(OpExtractWordRectsEx(handle, x1, y1, x2, y2, color, sim, min_word_w, min_word_h, padding));
 
     /// <summary>
     /// 根据指定范围和颜色描述，提取字库条目信息
@@ -638,7 +647,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="word">字符名称</param>
     /// <returns>返回可传给 AddDict 的字库条目，区域为空或失败时返回空字符串</returns>
     public string FetchWord(int x1, int y1, int x2, int y2, string color, string word) 
-        => OpFetchWord(handle, x1, y1, x2, y2, color, word);
+        => _PtrToString(OpFetchWord(handle, x1, y1, x2, y2, color, word));
 
     /// <summary>
     /// 根据指定范围、颜色和相似度，提取单个点阵字库条目。相比 <code>FetchWord</code>，该接口可以处理轻微色差或抗锯齿边缘。
@@ -652,7 +661,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="word">字符名称</param>
     /// <returns>返回可传给 <code>AddDict</code> 的字库条目。区域为空、切图失败或没有前景点时返回空字符串。</returns>
     public string FetchWordEx(int x1, int y1, int x2, int y2, string color, double sim, string word) 
-        => OpFetchWordEx(handle, x1, y1, x2, y2, color, sim, word);
+        => _PtrToString(OpFetchWordEx(handle, x1, y1, x2, y2, color, sim, word));
 
     /// <summary>
     /// 自动切字，并按 <code>words</code> 的字符顺序生成多条点阵字库。切出的字块数量必须和 <code>words</code> 的字符数一致，否则返回空字符串。
@@ -667,7 +676,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="min_word_h">字块最小高度</param>
     /// <returns>返回多行字库文本，每行是一条字库。失败或数量不匹配时返回空字符串。</returns>
     public string FetchWords(int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_h) 
-        => OpFetchWords(handle, x1, y1, x2, y2, color, sim, words, min_word_h);
+        => _PtrToString(OpFetchWords(handle, x1, y1, x2, y2, color, sim, words, min_word_h));
 
     /// <summary>
     /// 按指定字块矩形生成多条点阵字库。<code>rects</code> 可以直接使用 <code>ExtractWordRects</code> 或 <code>ExtractWordRectsEx</code> 的返回值。
@@ -682,7 +691,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="rects">字块矩形列表，格式为 `x1,y1,x2,y2</param>
     /// <returns>返回多行字库文本。矩形数量和 <code>words</code> 数量不一致时返回空字符串。</returns>
     public string FetchWordsByRects(int x1, int y1, int x2, int y2, string color, double sim, string words, string rects) 
-        => OpFetchWordsByRects(handle, x1, y1, x2, y2, color, sim, words, rects);
+        => _PtrToString(OpFetchWordsByRects(handle, x1, y1, x2, y2, color, sim, words, rects));
 
     /// <summary>
     /// 使用更细的切字参数批量生成点阵字库。
@@ -699,7 +708,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="padding">给每个字块额外保留的边距</param>
     /// <returns>返回多行字库文本。失败或数量不匹配时返回空字符串。</returns>
     public string FetchWordsEx(int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_w, int min_word_h, int padding) 
-        => OpFetchWordsEx(handle, x1, y1, x2, y2, color, sim, words, min_word_w, min_word_h, padding);
+        => _PtrToString(OpFetchWordsEx(handle, x1, y1, x2, y2, color, sim, words, min_word_w, min_word_h, padding));
 
     /// <summary>
     /// 查找指定区域内的颜色
@@ -749,7 +758,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="width">颜色块的高度</param>
     /// <returns>返回所有颜色块信息的坐标</returns>
     public string FindColorBlockEx(int x1, int y1, int x2, int y2, string color, double sim, int count, int height, int width) 
-        => OpFindColorBlockEx(handle, x1, y1, x2, y2, color, sim, count, height, width);
+        => _PtrToString(OpFindColorBlockEx(handle, x1, y1, x2, y2, color, sim, count, height, width));
 
     /// <summary>
     /// 查找指定区域内的所有颜色
@@ -763,7 +772,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="dir">查找方向,取值如下</param>
     /// <returns>返回所有颜色信息的坐标值</returns>
     public string FindColorEx(int x1, int y1, int x2, int y2, string color, double sim, int dir) 
-        => OpFindColorEx(handle, x1, y1, x2, y2, color, sim, dir);
+        => _PtrToString(OpFindColorEx(handle, x1, y1, x2, y2, color, sim, dir));
 
     /// <summary>
     /// 在指定的屏幕坐标范围内，查找指定颜色的直线
@@ -776,7 +785,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="sim">相似度,取值范围 0.1-1.0</param>
     /// <returns>返回直线描述。结果包含直线角度和距离等信息，失败时返回空字符串。</returns>
     public string FindLine(int x1, int y1, int x2, int y2, string color, double sim) 
-        => OpFindLine(handle, x1, y1, x2, y2, color, sim);
+        => _PtrToString(OpFindLine(handle, x1, y1, x2, y2, color, sim));
 
     /// <summary>
     /// 根据指定的多点查找颜色坐标
@@ -808,7 +817,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="dir">查找方向,取值如下<a href="#dir">Dir</a> </param>
     /// <returns>返回所有颜色信息的坐标,坐标是 first_color 所在的坐标</returns>
     public string FindMultiColorEx(int x1, int y1, int x2, int y2, string first_color, string offset_color, double sim, int dir) 
-        => OpFindMultiColorEx(handle, x1, y1, x2, y2, first_color, offset_color, sim, dir);
+        => _PtrToString(OpFindMultiColorEx(handle, x1, y1, x2, y2, first_color, offset_color, sim, dir));
 
     /// <summary>
     /// 在一组位置中查找最近的位置
@@ -819,7 +828,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="y">参考点 Y 坐标</param>
     /// <returns>返回最接近指定坐标 <code>(x,y)</code> 的位置。<code>type=0</code> 时返回 <code>name,x,y</code>，<code>type=1</code> 时返回 <code>x,y</code>。</returns>
     public string FindNearestPos(string all_pos, int type, int x, int y) 
-        => OpFindNearestPos(handle, all_pos, type, x, y);
+        => _PtrToString(OpFindNearestPos(handle, all_pos, type, x, y));
 
     /// <summary>
     /// 查找指定区域内的图片
@@ -851,7 +860,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="dir">查找方向,取值如下<a href="#dir">Dir</a> </param>
     /// <returns>返回的是所有找到的坐标格式如下:"id,x,y|id,x,y..|id,x,y";id 对应图片序号，x,y 图片左上角的坐标</returns>
     public string FindPicEx(int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir) 
-        => OpFindPicEx(handle, x1, y1, x2, y2, files, delta_color, sim, dir);
+        => _PtrToString(OpFindPicEx(handle, x1, y1, x2, y2, files, delta_color, sim, dir));
 
     /// <summary>
     /// 查找多个图片，并返回所有命中的图片名和坐标。
@@ -866,7 +875,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="dir">查找方向,取值如下<a href="#dir">Dir</a> </param>
     /// <returns>返回的是所有找到的坐标格式如下:"file,x,y| file,x,y..| file,x,y" (图片左上角的坐标)</returns>
     public string FindPicExS(int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir) 
-        => OpFindPicExS(handle, x1, y1, x2, y2, files, delta_color, sim, dir);
+        => _PtrToString(OpFindPicExS(handle, x1, y1, x2, y2, files, delta_color, sim, dir));
 
     /// <summary>
     /// 在屏幕范围(x1,y1,x2,y2)内查找字符串，并返回符合 color_format 的坐标位置
@@ -896,7 +905,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="sim">相似度,取值范围 0.1-1.0</param>
     /// <returns>返回所有找到的坐标集合,格式如下: "id,x0,y0|id,x1,y1|......|id,xn,yn" 比如"0,100,20|2,30,40" 表示找到了两个,第一个,对应的是序号为 0 的字符串,坐标是(100,20),第二个是序号为 2 的字符串,坐标(30,40)</returns>
     public string FindStrEx(int x1, int y1, int x2, int y2, string strs, string color, double sim) 
-        => OpFindStrEx(handle, x1, y1, x2, y2, strs, color, sim);
+        => _PtrToString(OpFindStrEx(handle, x1, y1, x2, y2, strs, color, sim));
 
     /// <summary>
     /// 查找符合类名或者标题名的顶层可见窗口
@@ -950,7 +959,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// </summary>
     /// <returns>返回当前插件所在路径</returns>
     public string GetBasePath() 
-        => OpGetBasePath(handle);
+        => _PtrToString(OpGetBasePath(handle));
 
     /// <summary>
     /// 获取当前点阵二值图预处理参数。
@@ -975,7 +984,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>返回前景点数量。失败或没有前景点时返回 0。</returns>
     public string GetBinaryPreview(int x1, int y1, int x2, int y2, string color, double sim, out int ret) 
-        => OpGetBinaryPreview(handle, x1, y1, x2, y2, color, sim, out ret);
+        => _PtrToString(OpGetBinaryPreview(handle, x1, y1, x2, y2, color, sim, out ret));
 
     /// <summary>
     /// 获取当前对象已经绑定的窗口句柄. 无绑定返回:0
@@ -1011,7 +1020,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// </summary>
     /// <returns>成功则返回剪贴板数据</returns>
     public string GetClipboard() 
-        => OpGetClipboard(handle);
+        => _PtrToString(OpGetClipboard(handle));
 
     /// <summary>
     /// 运行命令行并返回结果
@@ -1020,7 +1029,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="millseconds">等待的时间(毫秒)</param>
     /// <returns>cmd 输出的字符</returns>
     public string GetCmdStr(string cmd, int millseconds) 
-        => OpGetCmdStr(handle, cmd, millseconds);
+        => _PtrToString(OpGetCmdStr(handle, cmd, millseconds));
 
     /// <summary>
     /// 获取(x,y)的颜色
@@ -1029,7 +1038,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="y">Y 坐标</param>
     /// <returns>返回颜色字符串</returns>
     public string GetColor(int x, int y) 
-        => OpGetColor(handle, x, y);
+        => _PtrToString(OpGetColor(handle, x, y));
 
     /// <summary>
     /// 统计指定区域内匹配颜色的像素数量
@@ -1058,7 +1067,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// </summary>
     /// <returns>返回当前鼠标形状的特征字符串，获取失败返回空字符串</returns>
     public string GetCursorShape() 
-        => OpGetCursorShape(handle);
+        => _PtrToString(OpGetCursorShape(handle));
 
     /// <summary>
     /// 获取指定字库中的条目内容
@@ -1067,7 +1076,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="font_index">条目序号</param>
     /// <returns>返回字库条目字符串，失败返回空字符串</returns>
     public string GetDict(int idx, int font_index) 
-        => OpGetDict(handle, idx, font_index);
+        => _PtrToString(OpGetDict(handle, idx, font_index));
 
     /// <summary>
     /// 获取指定字库中的字符数量
@@ -1132,7 +1141,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// </summary>
     /// <returns>返回当前设置的全局路径</returns>
     public string GetPath() 
-        => OpGetPath(handle);
+        => _PtrToString(OpGetPath(handle));
 
     /// <summary>
     /// 获取图片宽高
@@ -1159,7 +1168,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="pid">进程 pid</param>
     /// <returns>返回格式"进程名|进程路径|cpu|内存"</returns>
     public string GetProcessInfo(int pid) 
-        => OpGetProcessInfo(handle, pid);
+        => _PtrToString(OpGetProcessInfo(handle, pid));
 
     /// <summary>
     /// 获取指定区域的图像,用二进制数据的方式返回
@@ -1217,7 +1226,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="hwnd">指定的窗口句柄</param>
     /// <returns>窗口的类名</returns>
     public string GetWindowClass(IntPtr hwnd) 
-        => OpGetWindowClass(handle, hwnd);
+        => _PtrToString(OpGetWindowClass(handle, hwnd));
 
     /// <summary>
     /// 获取指定窗口所在的进程 ID
@@ -1233,7 +1242,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="hwnd">指定的窗口句柄</param>
     /// <returns>返回进程所在的全路径</returns>
     public string GetWindowProcessPath(IntPtr hwnd) 
-        => OpGetWindowProcessPath(handle, hwnd);
+        => _PtrToString(OpGetWindowProcessPath(handle, hwnd));
 
     /// <summary>
     /// 获取窗口在屏幕上的位置
@@ -1262,7 +1271,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="hwnd">指定的窗口句柄</param>
     /// <returns>返回窗口的标题</returns>
     public string GetWindowTitle(IntPtr hwnd) 
-        => OpGetWindowTitle(handle, hwnd);
+        => _PtrToString(OpGetWindowTitle(handle, hwnd));
 
     /// <summary>
     /// 返回点阵预览
@@ -1271,7 +1280,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>0：字库条目无效 1：字库条目有效</returns>
     public string GetWordPreview(string dict_info, out int ret) 
-        => OpGetWordPreview(handle, dict_info, out ret);
+        => _PtrToString(OpGetWordPreview(handle, dict_info, out ret));
 
     /// <summary>
     /// 获取 GetWordsNoDict 结果中的词块数量
@@ -1299,7 +1308,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="index">词块序号，从 0 开始</param>
     /// <returns>返回词块内容，失败返回空字符串</returns>
     public string GetWordResultStr(string result, int index) 
-        => OpGetWordResultStr(handle, result, index);
+        => _PtrToString(OpGetWordResultStr(handle, result, index));
 
     /// <summary>
     /// 不依赖字库，识别指定范围内所有满足颜色条件的词块位置和点阵信息
@@ -1311,7 +1320,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="color">颜色格式串，比如"FFFFFF-000000|CCCCCC-000000"每种颜色用"|"分割</param>
     /// <returns>返回格式为 <code>x,y-word/x,y-word/</code></returns>
     public string GetWordsNoDict(int x1, int y1, int x2, int y2, string color) 
-        => OpGetWordsNoDict(handle, x1, y1, x2, y2, color);
+        => _PtrToString(OpGetWordsNoDict(handle, x1, y1, x2, y2, color));
 
     /// <summary>
     /// 水平滚轮滚动指定距离
@@ -1472,7 +1481,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="pic_name">文件名,比如"1.bmp|2.bmp|3.bmp" 等</param>
     /// <returns>返回的是通配符对应的文件集合，每个图片以|分割</returns>
     public string MatchPicName(string pic_name) 
-        => OpMatchPicName(handle, pic_name);
+        => _PtrToString(OpMatchPicName(handle, pic_name));
 
     /// <summary>
     /// 按下鼠标中键
@@ -1538,7 +1547,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="h">高度(从 y 计算起)</param>
     /// <returns>返回要移动到的目标点. 格式为 x,y. 比如 MoveToEx 100,100,10,10,返回值可能是 101,102</returns>
     public string MoveToEx(int x, int y, int w, int h) 
-        => OpMoveToEx(handle, x, y, w, h);
+        => _PtrToString(OpMoveToEx(handle, x, y, w, h));
 
     /// <summary>
     /// 在指定范围内随机取一个目标点，然后按轨迹移动过去。
@@ -1550,7 +1559,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="duration">整段轨迹耗时，单位毫秒</param>
     /// <returns>成功时返回最终移动到的点，格式为 <code>x,y</code>。失败时返回空字符串。</returns>
     public string MoveToExSmooth(int x, int y, int w, int h, int duration) 
-        => OpMoveToExSmooth(handle, x, y, w, h, duration);
+        => _PtrToString(OpMoveToExSmooth(handle, x, y, w, h, duration));
 
     /// <summary>
     /// 按轨迹把鼠标移动到指定坐标。
@@ -1579,7 +1588,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>返回保留下来的合法条目数量。</returns>
     public string NormalizeWordDict(string dict_info, out int ret) 
-        => OpNormalizeWordDict(handle, dict_info, out ret);
+        => _PtrToString(OpNormalizeWordDict(handle, dict_info, out ret));
 
     /// <summary>
     /// 识别屏幕范围(x1,y1,x2,y2)内符合 color_format 的字符串
@@ -1592,7 +1601,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="sim">相似度,取值范围 0.1-1.0</param>
     /// <returns>返回识别到的字符串</returns>
     public string Ocr(int x1, int y1, int x2, int y2, string color, double sim) 
-        => OpOcr(handle, x1, y1, x2, y2, color, sim);
+        => _PtrToString(OpOcr(handle, x1, y1, x2, y2, color, sim));
 
     /// <summary>
     /// 识别屏幕范围(x1,y1,x2,y2)内的字符串，自动二值化，不需要指定颜色
@@ -1604,7 +1613,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="sim">相似度,取值范围 0.1-1.0</param>
     /// <returns>返回识别到的字符串</returns>
     public string OcrAuto(int x1, int y1, int x2, int y2, double sim) 
-        => OpOcrAuto(handle, x1, y1, x2, y2, sim);
+        => _PtrToString(OpOcrAuto(handle, x1, y1, x2, y2, sim));
 
     /// <summary>
     /// 从文件中识别图片，自动二值化，不需要指定颜色
@@ -1613,7 +1622,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="sim">相似度,取值范围 0.1-1.0</param>
     /// <returns>返回识别到的字符串</returns>
     public string OcrAutoFromFile(string file_name, double sim) 
-        => OpOcrAutoFromFile(handle, file_name, sim);
+        => _PtrToString(OpOcrAutoFromFile(handle, file_name, sim));
 
     /// <summary>
     /// 该方法可以返回识别到的字符串，以及每个字符的坐标
@@ -1626,7 +1635,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="sim">相似度,取值范围 0.1-1.0</param>
     /// <returns>返回识别到的字符串以及坐标</returns>
     public string OcrEx(int x1, int y1, int x2, int y2, string color, double sim) 
-        => OpOcrEx(handle, x1, y1, x2, y2, color, sim);
+        => _PtrToString(OpOcrEx(handle, x1, y1, x2, y2, color, sim));
 
     /// <summary>
     /// 从文件中识别图片
@@ -1636,7 +1645,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="sim">相似度,取值范围 0.1-1.0</param>
     /// <returns>返回识别到的字符串</returns>
     public string OcrFromFile(string file_name, string color_format, double sim) 
-        => OpOcrFromFile(handle, file_name, color_format, sim);
+        => _PtrToString(OpOcrFromFile(handle, file_name, color_format, sim));
 
     /// <summary>
     /// 读取数据
@@ -1646,7 +1655,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="size">要读取的数据的大小</param>
     /// <returns>读取到的数值</returns>
     public string ReadData(IntPtr hwnd, string address, int size) 
-        => OpReadData(handle, hwnd, address, size);
+        => _PtrToString(OpReadData(handle, hwnd, address, size));
 
     /// <summary>
     /// 读取双精度浮点数
@@ -1688,7 +1697,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="len">读取字节数，0 表示自动到结尾</param>
     /// <returns>读取到的字符串，失败返回空字符串</returns>
     public string ReadString(IntPtr hwnd, string address, int type, int len) 
-        => OpReadString(handle, hwnd, address, type, len);
+        => _PtrToString(OpReadString(handle, hwnd, address, type, len));
 
     /// <summary>
     /// 返回重命名后的字库文本
@@ -1698,7 +1707,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>返回重命名成功的条目数量。字库为空或数量不一致时返回 0。</returns>
     public string RenameWordDict(string dict_info, string words, out int ret) 
-        => OpRenameWordDict(handle, dict_info, words, out ret);
+        => _PtrToString(OpRenameWordDict(handle, dict_info, words, out ret));
 
     /// <summary>
     /// 按下鼠标右键
@@ -1979,7 +1988,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// </summary>
     /// <returns>返回 op 插件的版本号</returns>
     public string Ver() 
-        => OpVer();
+        => _PtrToString(OpVer());
 
     /// <summary>
     /// 等待指定的按键按下 (前台,不是后台)
@@ -2142,7 +2151,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>返回检测到的目标数量。请求失败、未绑定截图或检测失败时返回 0，<code>retjson</code> 为空。</returns>
     public string YoloDetect(int x1, int y1, int x2, int y2, double conf, double iou) 
-        => OpYoloDetect(handle, x1, y1, x2, y2, conf, iou);
+        => _PtrToString(OpYoloDetect(handle, x1, y1, x2, y2, conf, iou));
 
     /// <summary>
     /// 返回检测结果 JSON 字符串
@@ -2153,7 +2162,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="ret"></param>
     /// <returns>返回检测到的目标数量。文件不存在、请求失败或检测失败时返回 0，<code>retjson</code> 为空。</returns>
     public string YoloDetectFromFile(string file_name, double conf, double iou) 
-        => OpYoloDetectFromFile(handle, file_name, conf, iou);
+        => _PtrToString(OpYoloDetectFromFile(handle, file_name, conf, iou));
 
     #region DLL Import Define
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
@@ -2166,7 +2175,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpAddDict(IntPtr handle, int idx, string dict_info);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpAStarFindPath(IntPtr handle, int mapWidth, int mapHeight, string disable_points, int beginX, int beginY, int endX, int endY);
+    private static extern IntPtr OpAStarFindPath(IntPtr handle, int mapWidth, int mapHeight, string disable_points, int beginX, int beginY, int endX, int endY);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpBindWindow(IntPtr handle, IntPtr hwnd, string display, string mouse, string keypad, int mode);
@@ -2181,7 +2190,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpCapturePre(IntPtr handle, string file_name);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCheckWordDict(IntPtr handle, string dict_info, out int ret);
+    private static extern IntPtr OpCheckWordDict(IntPtr handle, string dict_info, out int ret);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpClearDict(IntPtr handle, int idx);
@@ -2199,7 +2208,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpCvCLAHE(IntPtr handle, string src_file, string dst_file, double clip_limit, int tile_grid_size);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvConnectedComponents(IntPtr handle, string src_file, double min_area);
+    private static extern IntPtr OpCvConnectedComponents(IntPtr handle, string src_file, double min_area);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvCrop(IntPtr handle, string src_file, int x, int y, int width, int height, string dst_file);
@@ -2211,22 +2220,22 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpCvDenoise(IntPtr handle, string src_file, string dst_file);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvEdgeMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
+    private static extern IntPtr OpCvEdgeMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvEqualize(IntPtr handle, string src_file, string dst_file);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvFeatureMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
+    private static extern IntPtr OpCvFeatureMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvFindContours(IntPtr handle, string src_file, double min_area);
+    private static extern IntPtr OpCvFindContours(IntPtr handle, string src_file, double min_area);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvGetAllTemplateNames(IntPtr handle);
+    private static extern IntPtr OpCvGetAllTemplateNames(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvGetOpenCvVersion(IntPtr handle);
+    private static extern IntPtr OpCvGetOpenCvVersion(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvGetTemplateCount(IntPtr handle);
@@ -2247,16 +2256,16 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpCvLoadTemplateList(IntPtr handle, string template_list);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvMatchAllTemplates(IntPtr handle, int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode);
+    private static extern IntPtr OpCvMatchAllTemplates(IntPtr handle, int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvMatchAnyTemplate(IntPtr handle, int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode);
+    private static extern IntPtr OpCvMatchAnyTemplate(IntPtr handle, int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold, int dir, int strip_mode, int method, int color_mode);
+    private static extern IntPtr OpCvMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold, int dir, int strip_mode, int method, int color_mode);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvMatchTemplateScale(IntPtr handle, int x, int y, int width, int height, string template_name, string scales, double threshold, int method, int color_mode);
+    private static extern IntPtr OpCvMatchTemplateScale(IntPtr handle, int x, int y, int width, int height, string template_name, string scales, double threshold, int method, int color_mode);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvMorphology(IntPtr handle, string src_file, string dst_file, string mode, int kernel_size, int iterations);
@@ -2274,7 +2283,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpCvResize(IntPtr handle, string src_file, int width, int height, string dst_file);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpCvShapeMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
+    private static extern IntPtr OpCvShapeMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvSharpen(IntPtr handle, string src_file, string dst_file, double strength);
@@ -2310,34 +2319,34 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpEnablePicCache(IntPtr handle, int enable);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpEnumProcess(IntPtr handle, string name);
+    private static extern IntPtr OpEnumProcess(IntPtr handle, string name);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpEnumWindow(IntPtr handle, IntPtr parent, string title, string class_name, int filter);
+    private static extern IntPtr OpEnumWindow(IntPtr handle, IntPtr parent, string title, string class_name, int filter);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpEnumWindowByProcess(IntPtr handle, string process_name, string title, string class_name, int filter);
+    private static extern IntPtr OpEnumWindowByProcess(IntPtr handle, string process_name, string title, string class_name, int filter);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpExtractWordRects(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int min_word_h);
+    private static extern IntPtr OpExtractWordRects(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int min_word_h);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpExtractWordRectsEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int min_word_w, int min_word_h, int padding);
+    private static extern IntPtr OpExtractWordRectsEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int min_word_w, int min_word_h, int padding);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFetchWord(IntPtr handle, int x1, int y1, int x2, int y2, string color, string word);
+    private static extern IntPtr OpFetchWord(IntPtr handle, int x1, int y1, int x2, int y2, string color, string word);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFetchWordEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string word);
+    private static extern IntPtr OpFetchWordEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string word);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFetchWords(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_h);
+    private static extern IntPtr OpFetchWords(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_h);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFetchWordsByRects(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, string rects);
+    private static extern IntPtr OpFetchWordsByRects(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, string rects);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFetchWordsEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_w, int min_word_h, int padding);
+    private static extern IntPtr OpFetchWordsEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_w, int min_word_h, int padding);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindColor(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int dir, out int x, out int y);
@@ -2346,37 +2355,37 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpFindColorBlock(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int count, int height, int width, out int x, out int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindColorBlockEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int count, int height, int width);
+    private static extern IntPtr OpFindColorBlockEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int count, int height, int width);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindColorEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int dir);
+    private static extern IntPtr OpFindColorEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int dir);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindLine(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
+    private static extern IntPtr OpFindLine(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindMultiColor(IntPtr handle, int x1, int y1, int x2, int y2, string first_color, string offset_color, double sim, int dir, out int x, out int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindMultiColorEx(IntPtr handle, int x1, int y1, int x2, int y2, string first_color, string offset_color, double sim, int dir);
+    private static extern IntPtr OpFindMultiColorEx(IntPtr handle, int x1, int y1, int x2, int y2, string first_color, string offset_color, double sim, int dir);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindNearestPos(IntPtr handle, string all_pos, int type, int x, int y);
+    private static extern IntPtr OpFindNearestPos(IntPtr handle, string all_pos, int type, int x, int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindPic(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir, out int x, out int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindPicEx(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir);
+    private static extern IntPtr OpFindPicEx(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindPicExS(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir);
+    private static extern IntPtr OpFindPicExS(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindStr(IntPtr handle, int x1, int y1, int x2, int y2, string strs, string color, double sim, out int retx, out int rety);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpFindStrEx(IntPtr handle, int x1, int y1, int x2, int y2, string strs, string color, double sim);
+    private static extern IntPtr OpFindStrEx(IntPtr handle, int x1, int y1, int x2, int y2, string strs, string color, double sim);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpFindWindow(IntPtr handle, string class_name, string title);
@@ -2394,13 +2403,13 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpFreePic(IntPtr handle, string file_name);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetBasePath(IntPtr handle);
+    private static extern IntPtr OpGetBasePath(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetBinaryPreprocess(IntPtr handle, out int mode, out int isolated_threshold, out int min_component_area, out int bridge_gap);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetBinaryPreview(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, out int ret);
+    private static extern IntPtr OpGetBinaryPreview(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, out int ret);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetBindWindow(IntPtr handle);
@@ -2412,13 +2421,13 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpGetClientSize(IntPtr handle, IntPtr hwnd, out int width, out int height);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetClipboard(IntPtr handle);
+    private static extern IntPtr OpGetClipboard(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetCmdStr(IntPtr handle, string cmd, int millseconds);
+    private static extern IntPtr OpGetCmdStr(IntPtr handle, string cmd, int millseconds);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetColor(IntPtr handle, int x, int y);
+    private static extern IntPtr OpGetColor(IntPtr handle, int x, int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetColorNum(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
@@ -2427,10 +2436,10 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpGetCursorPos(IntPtr handle, out int x, out int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetCursorShape(IntPtr handle);
+    private static extern IntPtr OpGetCursorShape(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetDict(IntPtr handle, int idx, int font_index);
+    private static extern IntPtr OpGetDict(IntPtr handle, int idx, int font_index);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetDictCount(IntPtr handle, int idx);
@@ -2457,7 +2466,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpGetNowDict(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetPath(IntPtr handle);
+    private static extern IntPtr OpGetPath(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetPicSize(IntPtr handle, string pic_name, out int width, out int height);
@@ -2466,7 +2475,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern IntPtr OpGetPointWindow(IntPtr handle, int x, int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetProcessInfo(IntPtr handle, int pid);
+    private static extern IntPtr OpGetProcessInfo(IntPtr handle, int pid);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetScreenData(IntPtr handle, int x1, int y1, int x2, int y2, out int ret);
@@ -2484,13 +2493,13 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern IntPtr OpGetWindow(IntPtr handle, IntPtr hwnd, int flag);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetWindowClass(IntPtr handle, IntPtr hwnd);
+    private static extern IntPtr OpGetWindowClass(IntPtr handle, IntPtr hwnd);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWindowProcessId(IntPtr handle, IntPtr hwnd);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetWindowProcessPath(IntPtr handle, IntPtr hwnd);
+    private static extern IntPtr OpGetWindowProcessPath(IntPtr handle, IntPtr hwnd);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWindowRect(IntPtr handle, IntPtr hwnd, out int x1, out int y1, out int x2, out int y2);
@@ -2499,10 +2508,10 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpGetWindowState(IntPtr handle, IntPtr hwnd, int flag);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetWindowTitle(IntPtr handle, IntPtr hwnd);
+    private static extern IntPtr OpGetWindowTitle(IntPtr handle, IntPtr hwnd);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetWordPreview(IntPtr handle, string dict_info, out int ret);
+    private static extern IntPtr OpGetWordPreview(IntPtr handle, string dict_info, out int ret);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWordResultCount(IntPtr handle, string result);
@@ -2511,10 +2520,10 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpGetWordResultPos(IntPtr handle, string result, int index, out int x, out int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetWordResultStr(IntPtr handle, string result, int index);
+    private static extern IntPtr OpGetWordResultStr(IntPtr handle, string result, int index);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpGetWordsNoDict(IntPtr handle, int x1, int y1, int x2, int y2, string color);
+    private static extern IntPtr OpGetWordsNoDict(IntPtr handle, int x1, int y1, int x2, int y2, string color);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpHWheel(IntPtr handle, int delta);
@@ -2571,7 +2580,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpLockInput(IntPtr handle, int lock_);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpMatchPicName(IntPtr handle, string pic_name);
+    private static extern IntPtr OpMatchPicName(IntPtr handle, string pic_name);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMiddleClick(IntPtr handle);
@@ -2595,10 +2604,10 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpMoveTo(IntPtr handle, int x, int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpMoveToEx(IntPtr handle, int x, int y, int w, int h);
+    private static extern IntPtr OpMoveToEx(IntPtr handle, int x, int y, int w, int h);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpMoveToExSmooth(IntPtr handle, int x, int y, int w, int h, int duration);
+    private static extern IntPtr OpMoveToExSmooth(IntPtr handle, int x, int y, int w, int h, int duration);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMoveToSmooth(IntPtr handle, int x, int y, int duration);
@@ -2607,25 +2616,25 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpMoveWindow(IntPtr handle, IntPtr hwnd, int x, int y);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpNormalizeWordDict(IntPtr handle, string dict_info, out int ret);
+    private static extern IntPtr OpNormalizeWordDict(IntPtr handle, string dict_info, out int ret);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpOcr(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
+    private static extern IntPtr OpOcr(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpOcrAuto(IntPtr handle, int x1, int y1, int x2, int y2, double sim);
+    private static extern IntPtr OpOcrAuto(IntPtr handle, int x1, int y1, int x2, int y2, double sim);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpOcrAutoFromFile(IntPtr handle, string file_name, double sim);
+    private static extern IntPtr OpOcrAutoFromFile(IntPtr handle, string file_name, double sim);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpOcrEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
+    private static extern IntPtr OpOcrEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpOcrFromFile(IntPtr handle, string file_name, string color_format, double sim);
+    private static extern IntPtr OpOcrFromFile(IntPtr handle, string file_name, string color_format, double sim);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpReadData(IntPtr handle, IntPtr hwnd, string address, int size);
+    private static extern IntPtr OpReadData(IntPtr handle, IntPtr hwnd, string address, int size);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpReadDouble(IntPtr handle, IntPtr hwnd, string address, out double ret);
@@ -2637,10 +2646,10 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpReadInt(IntPtr handle, IntPtr hwnd, string address, int type, out long ret);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpReadString(IntPtr handle, IntPtr hwnd, string address, int type, int len);
+    private static extern IntPtr OpReadString(IntPtr handle, IntPtr hwnd, string address, int type, int len);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpRenameWordDict(IntPtr handle, string dict_info, string words, out int ret);
+    private static extern IntPtr OpRenameWordDict(IntPtr handle, string dict_info, string words, out int ret);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpRightClick(IntPtr handle);
@@ -2736,7 +2745,7 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpUseDict(IntPtr handle, int idx);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpVer();
+    private static extern IntPtr OpVer();
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWaitKey(IntPtr handle, int vk_code, int time_out);
@@ -2793,10 +2802,10 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     private static extern int OpXButton2Up(IntPtr handle);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpYoloDetect(IntPtr handle, int x1, int y1, int x2, int y2, double conf, double iou);
+    private static extern IntPtr OpYoloDetect(IntPtr handle, int x1, int y1, int x2, int y2, double conf, double iou);
 
     [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-    private static extern string OpYoloDetectFromFile(IntPtr handle, string file_name, double conf, double iou);
+    private static extern IntPtr OpYoloDetectFromFile(IntPtr handle, string file_name, double conf, double iou);
 
     #endregion
 }

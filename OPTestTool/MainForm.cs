@@ -25,6 +25,8 @@ namespace OPTestTool
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.Text += $" 核心版本: {opSoft.Ver()}";
+
             opSoft.SetShowErrorMsg(0);
 
             //应用上次退出时的设置

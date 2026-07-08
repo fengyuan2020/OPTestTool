@@ -883,24 +883,24 @@ namespace OPTestTool
             var wind = opSoft.GetBindWindow();
             string address = Txt_ReadAddress.Text;
             Logger.Log(string.Format(">>>ReadInt {0},\"{1}\",{2}", wind, address, type));
-            var reault = opSoft.ReadInt(wind, address, type);
-            Logger.Log("返回值：" + reault);
+            var reault = opSoft.ReadInt(wind, address, type, out var value);
+            Logger.Log($"返回值：{reault} value:{value}");
         }
         private void Btn_ReadFloat_Click(object sender, EventArgs e)
         {
             var wind = opSoft.GetBindWindow();
             string address = Txt_ReadAddress.Text;
             Logger.Log(string.Format(">>>ReadFloat {0},\"{1}\"", wind, address));
-            var reault = opSoft.ReadFloat(wind, address);
-            Logger.Log("返回值：" + reault);
+            var reault = opSoft.ReadFloat(wind, address, out var value);
+            Logger.Log($"返回值：{reault} value:{value}");
         }
         private void Btn_ReadDouble_Click(object sender, EventArgs e)
         {
             var wind = opSoft.GetBindWindow();
             string address = Txt_ReadAddress.Text;
             Logger.Log(string.Format(">>>ReadDouble {0},\"{1}\"", wind, address));
-            var reault = opSoft.ReadDouble(wind, address);
-            Logger.Log("返回值：" + reault);
+            var reault = opSoft.ReadDouble(wind, address, out var value);
+            Logger.Log($"返回值：{reault} value:{value}");
         }
         private void Btn_ReadString_Click(object sender, EventArgs e)
         {

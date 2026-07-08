@@ -1,8 +1,8 @@
-﻿// op.idl: op 的 IDL 源
+// op.idl: IDL source for op.
 //
 
-// 此文件将由 MIDL 工具处理以
-// 生成类型库(op.tlb)和封送处理代码。
+// This file is processed by MIDL to generate the type library
+// (op.tlb) and proxy/stub marshaling code.
 
 import "oaidl.idl";
 import "ocidl.idl";
@@ -92,6 +92,7 @@ interface IOpAutomation : IDispatch
 	[id(102)] HRESULT GetBindWindow([out, retval] hyper* ret);
 	[id(103)] HRESULT IsBind([out, retval] LONG* ret);
 	[id(104)] HRESULT BindWindowEx([in] hyper display_hwnd, [in] hyper input_hwnd, [in] BSTR display, [in] BSTR mouse, [in] BSTR keypad, [in] LONG mode, [out, retval] LONG* ret);
+	[id(105)] HRESULT LockInput([in] LONG lock, [out, retval] LONG* ret);
 	//mouse & ketboard 120-149
 	[id(120)] HRESULT GetCursorPos([out] VARIANT* x, [out] VARIANT* y, [out, retval] LONG* ret);
 	[id(121)] HRESULT MoveR([in] LONG x, [in] LONG y, [out, retval] LONG* ret);
@@ -104,15 +105,28 @@ interface IOpAutomation : IDispatch
 	[id(127)] HRESULT LeftUp([out, retval] LONG* ret);
 
 	[id(128)] HRESULT MiddleClick([out, retval] LONG* ret);
+	[id(336)] HRESULT MiddleDoubleClick([out, retval] LONG* ret);
 	[id(129)] HRESULT MiddleDown([out, retval] LONG* ret);
 	[id(130)] HRESULT MiddleUp([out, retval] LONG* ret);
 
 	[id(131)] HRESULT RightClick([out, retval] LONG* ret);
+	[id(337)] HRESULT RightDoubleClick([out, retval] LONG* ret);
 	[id(132)] HRESULT RightDown([out, retval] LONG* ret);
 	[id(133)] HRESULT RightUp([out, retval] LONG* ret);
 
+	[id(338)] HRESULT XButton1Click([out, retval] LONG* ret);
+	[id(339)] HRESULT XButton1DoubleClick([out, retval] LONG* ret);
+	[id(340)] HRESULT XButton1Down([out, retval] LONG* ret);
+	[id(341)] HRESULT XButton1Up([out, retval] LONG* ret);
+	[id(342)] HRESULT XButton2Click([out, retval] LONG* ret);
+	[id(343)] HRESULT XButton2DoubleClick([out, retval] LONG* ret);
+	[id(344)] HRESULT XButton2Down([out, retval] LONG* ret);
+	[id(345)] HRESULT XButton2Up([out, retval] LONG* ret);
+
 	[id(134)] HRESULT WheelDown([out, retval] LONG* ret);
 	[id(135)] HRESULT WheelUp([out, retval] LONG* ret);
+	[id(346)] HRESULT Wheel([in] LONG delta, [out, retval] LONG* ret);
+	[id(347)] HRESULT HWheel([in] LONG delta, [out, retval] LONG* ret);
 
 	[id(136)] HRESULT GetKeyState([in] LONG vk_code, [out, retval] LONG* ret);
 
@@ -124,6 +138,11 @@ interface IOpAutomation : IDispatch
 	[id(142)] HRESULT KeyPress([in] LONG vk_code, [out, retval] LONG* ret);
 	[id(143)] HRESULT KeyPressChar([in] BSTR vk_code, [out, retval] LONG* ret);
 	[id(144)] HRESULT GetCursorShape([out, retval] BSTR* ret);
+	[id(145)] HRESULT MoveToSmooth([in] LONG x, [in] LONG y, [in] LONG duration, [out, retval] LONG* ret);
+	[id(146)] HRESULT MoveToExSmooth([in] LONG x, [in] LONG y, [in] LONG w, [in] LONG h, [in] LONG duration, [out, retval] BSTR* ret);
+	[id(147)] HRESULT MovePath([in] BSTR path, [in] LONG duration, [out, retval] LONG* ret);
+	[id(148)] HRESULT DragPath([in] BSTR path, [in] LONG duration, [out, retval] LONG* ret);
+	[id(149)] HRESULT SetMouseTrajectory([in] LONG mode, [in] LONG min_duration, [in] LONG max_duration, [in] LONG jitter, [in] LONG start_delay, [in] LONG end_delay, [out, retval] LONG* ret);
 	//image & color 150-199
 	[id(150)] HRESULT Capture([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR file_name, [out, retval] LONG* ret);
 	[id(151)] HRESULT CmpColor([in] LONG x, [in] LONG y, [in] BSTR color, [in] DOUBLE sim, [out, retval] LONG* ret);
@@ -142,21 +161,21 @@ interface IOpAutomation : IDispatch
 	[id(164)] HRESULT SetDisplayInput([in] BSTR method, [out, retval] LONG* ret);
 	[id(165)] HRESULT LoadPic([in] BSTR pic_name, [out, retval] LONG* ret);
 	[id(166)] HRESULT FreePic([in] BSTR Pic_name, [out, retval] LONG* ret);
-	[id(167)] HRESULT GetScreenData([in] LONG  x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [out, retval]LONG* ret);
+	[id(167)] HRESULT GetScreenData([in] LONG  x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [out, retval] hyper* ret);
 	[id(168)] HRESULT GetScreenDataBmp([in] LONG  x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [out] VARIANT* data, [out] VARIANT* size, [out, retval]LONG* ret);
 	[id(169)] HRESULT MatchPicName([in] BSTR pic_name, [out, retval] BSTR* retstr);
-	[id(170)] HRESULT LoadMemPic([in] BSTR pic_name, [in]long long data, [in]LONG size, [out, retval] LONG* ret);
+	[id(170)] HRESULT LoadMemPic([in] BSTR pic_name, [in]long long data, [in]LONG size,[out, retval] LONG* ret);
 	[id(171)] HRESULT SetMouseDelay([in] BSTR type, [in] LONG delay, [out, retval]LONG* ret);
 	[id(172)] HRESULT SetKeypadDelay([in] BSTR type, [in] LONG delay, [out, retval]LONG* ret);
-	[id(173)] HRESULT SetClipboard([in] BSTR str, [out, retval] LONG* ret);
-	[id(174)] HRESULT GetClipboard([out, retval] BSTR* ret);
-	[id(175)] HRESULT Delay([in] LONG mis, [out, retval] LONG* ret);
-	[id(176)] HRESULT Delays([in] LONG mis_min, [in] LONG mis_max, [out, retval] LONG* ret);
-	[id(177)] HRESULT KeyPressStr([in]BSTR key_str, [in]LONG delay, [out, retval] LONG* ret);
+    [id(173)] HRESULT SetClipboard([in] BSTR str, [out, retval] LONG* ret);
+    [id(174)] HRESULT GetClipboard([out, retval] BSTR* ret);
+    [id(175)] HRESULT Delay([in] LONG mis, [out, retval] LONG* ret);
+    [id(176)] HRESULT Delays([in] LONG mis_min,[in] LONG mis_max, [out, retval] LONG* ret);
+	[id(177)] HRESULT KeyPressStr([in]BSTR key_str,[in]LONG delay,[out, retval] LONG* ret);
 	[id(178)] HRESULT GetColorNum([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [out, retval]LONG* ret);
 	[id(179)] HRESULT GetPicSize([in] BSTR pic_name, [out] VARIANT* width, [out] VARIANT* height, [out, retval] LONG* ret);
 	[id(180)] HRESULT GetScreenFrameInfo([out] LONG* frame_id, [out] LONG* time);
-
+	
 	//ocr 200-230
 	[id(200)] HRESULT SetDict([in] LONG idx, [in] BSTR file_name, [out, retval] LONG* ret);
 	[id(201)] HRESULT UseDict([in] LONG idx, [out, retval] LONG* ret);
@@ -172,7 +191,7 @@ interface IOpAutomation : IDispatch
 	[id(211)] HRESULT SetYoloEngine([in] BSTR path_of_engine, [in] BSTR dll_name, [in] BSTR argv, [out, retval] LONG* ret);
 	[id(212)] HRESULT YoloDetect([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] DOUBLE conf, [in] DOUBLE iou, [out] BSTR* retjson, [out, retval] LONG* ret);
 	[id(213)] HRESULT YoloDetectFromFile([in] BSTR file_name, [in] DOUBLE conf, [in] DOUBLE iou, [out] BSTR* retjson, [out, retval] LONG* ret);
-	[id(220)] HRESULT SetMemDict([in] LONG idx, [in]BSTR data, [in]LONG size, [out, retval] LONG* ret);
+	[id(220)] HRESULT SetMemDict([in] LONG idx, [in] SAFEARRAY(BYTE) data, [out, retval] LONG* ret);
 	[id(221)] HRESULT GetDict([in] LONG idx, [in] LONG font_index, [out, retval] BSTR* retstr);
 	[id(222)] HRESULT AddDict([in] LONG idx, [in] BSTR dict_info, [out, retval] LONG* ret);
 	[id(223)] HRESULT SaveDict([in] LONG idx, [in] BSTR file_name, [out, retval] LONG* ret);
@@ -184,6 +203,19 @@ interface IOpAutomation : IDispatch
 	[id(229)] HRESULT GetWordResultCount([in] BSTR result, [out, retval] LONG* ret);
 	[id(230)] HRESULT GetWordResultPos([in] BSTR result, [in] LONG index, [out] VARIANT* x, [out] VARIANT* y, [out, retval] LONG* ret);
 	[id(231)] HRESULT GetWordResultStr([in] BSTR result, [in] LONG index, [out, retval] BSTR* retstr);
+	[id(232)] HRESULT ExtractWordRects([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] LONG min_word_h, [out, retval] BSTR* retstr);
+	[id(233)] HRESULT FetchWords([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] BSTR words, [in] LONG min_word_h, [out, retval] BSTR* retstr);
+	[id(234)] HRESULT GetBinaryPreview([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [out] BSTR* retstr, [out, retval] LONG* ret);
+	[id(235)] HRESULT GetWordPreview([in] BSTR dict_info, [out] BSTR* retstr, [out, retval] LONG* ret);
+	[id(236)] HRESULT CheckWordDict([in] BSTR dict_info, [out] BSTR* retstr, [out, retval] LONG* ret);
+	[id(237)] HRESULT FetchWordsByRects([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] BSTR words, [in] BSTR rects, [out, retval] BSTR* retstr);
+	[id(238)] HRESULT FetchWordEx([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] BSTR word, [out, retval] BSTR* retstr);
+	[id(239)] HRESULT ExtractWordRectsEx([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] LONG min_word_w, [in] LONG min_word_h, [in] LONG padding, [out, retval] BSTR* retstr);
+	[id(240)] HRESULT FetchWordsEx([in] LONG x1, [in] LONG y1, [in] LONG x2, [in] LONG y2, [in] BSTR color, [in] DOUBLE sim, [in] BSTR words, [in] LONG min_word_w, [in] LONG min_word_h, [in] LONG padding, [out, retval] BSTR* retstr);
+	[id(241)] HRESULT NormalizeWordDict([in] BSTR dict_info, [out] BSTR* retstr, [out, retval] LONG* ret);
+	[id(242)] HRESULT RenameWordDict([in] BSTR dict_info, [in] BSTR words, [out] BSTR* retstr, [out, retval] LONG* ret);
+	[id(243)] HRESULT SetBinaryPreprocess([in] LONG mode, [in] LONG isolated_threshold, [in] LONG min_component_area, [in] LONG bridge_gap, [out, retval] LONG* ret);
+	[id(244)] HRESULT GetBinaryPreprocess([out] LONG* mode, [out] LONG* isolated_threshold, [out] LONG* min_component_area, [out] LONG* bridge_gap, [out, retval] LONG* ret);
 
 	[id(250)] HRESULT WriteData([in] hyper hwnd, [in]BSTR address, [in] BSTR data, [in] LONG size, [out, retval] LONG* ret);
 	[id(251)] HRESULT ReadData([in] hyper hwnd, [in] BSTR address, [in] LONG size, [out, retval] BSTR* retstr);

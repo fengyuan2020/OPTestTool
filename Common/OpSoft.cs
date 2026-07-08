@@ -1168,20 +1168,18 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
     /// <param name="y1">区域的左上 Y 坐标</param>
     /// <param name="x2">区域的右下 X 坐标</param>
     /// <param name="y2">区域的右下 Y 坐标</param>
-    /// <param name="data"></param>
     /// <param name="ret"></param>
     /// <returns>返回的是指定区域的二进制图片颜色数据，每个颜色是 4 个字节,表示方式为(00RRGGBB)</returns>
     public IntPtr GetScreenData(int x1, int y1, int x2, int y2, out int ret) 
         => OpGetScreenData(handle, x1, y1, x2, y2, out ret);
 
     /// <summary>
-    /// 获取指定区域的图像,用 24 位位图的数据格式返回
+    /// 变参指针:返回图片的数据指针
     /// </summary>
     /// <param name="x1">区域的左上 X 坐标</param>
     /// <param name="y1">区域的左上 Y 坐标</param>
     /// <param name="x2">区域的右下 X 坐标</param>
     /// <param name="y2">区域的右下 Y 坐标</param>
-    /// <param name="data">变参指针:返回图片的数据指针</param>
     /// <param name="size">变参指针:返回图片的数据长度</param>
     /// <param name="ret"></param>
     /// <returns>0：失败 1：成功</returns>
@@ -2158,646 +2156,646 @@ public partial class OpSoft: IDisposable, IComparable<OpSoft>
         => OpYoloDetectFromFile(handle, file_name, conf, iou);
 
     #region DLL Import Define
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpCreate();
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern void OpDestroy(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpAddDict(IntPtr handle, int idx, string dict_info);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpAStarFindPath(IntPtr handle, int mapWidth, int mapHeight, string disable_points, int beginX, int beginY, int endX, int endY);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpBindWindow(IntPtr handle, IntPtr hwnd, string display, string mouse, string keypad, int mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpBindWindowEx(IntPtr handle, IntPtr display_hwnd, IntPtr input_hwnd, string display, string mouse, string keypad, int mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCapture(IntPtr handle, int x1, int y1, int x2, int y2, string file_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCapturePre(IntPtr handle, string file_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCheckWordDict(IntPtr handle, string dict_info, out int ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpClearDict(IntPtr handle, int idx);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpClientToScreen(IntPtr handle, IntPtr hwnd, ref int x, ref int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCmpColor(IntPtr handle, int x, int y, string color, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvBlur(IntPtr handle, string src_file, string dst_file, string mode, int kernel_size);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvCLAHE(IntPtr handle, string src_file, string dst_file, double clip_limit, int tile_grid_size);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvConnectedComponents(IntPtr handle, string src_file, double min_area);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvCrop(IntPtr handle, string src_file, int x, int y, int width, int height, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvCropValid(IntPtr handle, string src_file, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvDenoise(IntPtr handle, string src_file, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvEdgeMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvEqualize(IntPtr handle, string src_file, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvFeatureMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvFindContours(IntPtr handle, string src_file, double min_area);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvGetAllTemplateNames(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvGetOpenCvVersion(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvGetTemplateCount(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvHasTemplate(IntPtr handle, string name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvInRange(IntPtr handle, string src_file, string dst_file, string color_space, string lower, string upper);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvLoadMaskedTemplate(IntPtr handle, string name, string template_path, string mask_path);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvLoadTemplate(IntPtr handle, string name, string file_path);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvLoadTemplateList(IntPtr handle, string template_list);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvMatchAllTemplates(IntPtr handle, int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvMatchAnyTemplate(IntPtr handle, int x, int y, int width, int height, string template_names, double threshold, int dir, int strip_mode, int method, int color_mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold, int dir, int strip_mode, int method, int color_mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvMatchTemplateScale(IntPtr handle, int x, int y, int width, int height, string template_name, string scales, double threshold, int method, int color_mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvMorphology(IntPtr handle, string src_file, string dst_file, string mode, int kernel_size, int iterations);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvPreprocessPipeline(IntPtr handle, string src_file, string dst_file, string pipeline);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvRemoveAllTemplates(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvRemoveTemplate(IntPtr handle, string name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvResize(IntPtr handle, string src_file, int width, int height, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpCvShapeMatchTemplate(IntPtr handle, int x, int y, int width, int height, string template_name, double threshold);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvSharpen(IntPtr handle, string src_file, string dst_file, double strength);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvThin(IntPtr handle, string src_file, string dst_file, string mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvThreshold(IntPtr handle, string src_file, string dst_file, double threshold, double max_value, string mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvToBinary(IntPtr handle, string src_file, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvToEdge(IntPtr handle, string src_file, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvToGray(IntPtr handle, string src_file, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpCvToOutline(IntPtr handle, string src_file, string dst_file);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpDelay(IntPtr handle, int mis);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpDelays(IntPtr handle, int mis_min, int mis_max);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpDragPath(IntPtr handle, string path, int duration);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpEnablePicCache(IntPtr handle, int enable);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpEnumProcess(IntPtr handle, string name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpEnumWindow(IntPtr handle, IntPtr parent, string title, string class_name, int filter);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpEnumWindowByProcess(IntPtr handle, string process_name, string title, string class_name, int filter);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpExtractWordRects(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int min_word_h);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpExtractWordRectsEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int min_word_w, int min_word_h, int padding);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFetchWord(IntPtr handle, int x1, int y1, int x2, int y2, string color, string word);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFetchWordEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string word);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFetchWords(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_h);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFetchWordsByRects(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, string rects);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFetchWordsEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, string words, int min_word_w, int min_word_h, int padding);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindColor(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int dir, out int x, out int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindColorBlock(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int count, int height, int width, out int x, out int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindColorBlockEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int count, int height, int width);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindColorEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, int dir);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindLine(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindMultiColor(IntPtr handle, int x1, int y1, int x2, int y2, string first_color, string offset_color, double sim, int dir, out int x, out int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindMultiColorEx(IntPtr handle, int x1, int y1, int x2, int y2, string first_color, string offset_color, double sim, int dir);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindNearestPos(IntPtr handle, string all_pos, int type, int x, int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindPic(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir, out int x, out int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindPicEx(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindPicExS(IntPtr handle, int x1, int y1, int x2, int y2, string files, string delta_color, double sim, int dir);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFindStr(IntPtr handle, int x1, int y1, int x2, int y2, string strs, string color, double sim, out int retx, out int rety);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpFindStrEx(IntPtr handle, int x1, int y1, int x2, int y2, string strs, string color, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpFindWindow(IntPtr handle, string class_name, string title);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpFindWindowByProcess(IntPtr handle, string process_name, string class_name, string title);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpFindWindowByProcessId(IntPtr handle, int process_id, string class_name, string title);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpFindWindowEx(IntPtr handle, IntPtr parent, string class_name, string title);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpFreePic(IntPtr handle, string file_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetBasePath(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetBinaryPreprocess(IntPtr handle, out int mode, out int isolated_threshold, out int min_component_area, out int bridge_gap);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetBinaryPreview(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim, out int ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetBindWindow(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetClientRect(IntPtr handle, IntPtr hwnd, out int x1, out int y1, out int x2, out int y2);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetClientSize(IntPtr handle, IntPtr hwnd, out int width, out int height);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetClipboard(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetCmdStr(IntPtr handle, string cmd, int millseconds);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetColor(IntPtr handle, int x, int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetColorNum(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetCursorPos(IntPtr handle, out int x, out int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetCursorShape(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetDict(IntPtr handle, int idx, int font_index);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetDictCount(IntPtr handle, int idx);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetForegroundFocus(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetForegroundWindow(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetID(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetKeyState(IntPtr handle, int vk_code);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetLastError(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetMousePointWindow(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetNowDict(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetPath(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetPicSize(IntPtr handle, string pic_name, out int width, out int height);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetPointWindow(IntPtr handle, int x, int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetProcessInfo(IntPtr handle, int pid);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetScreenData(IntPtr handle, int x1, int y1, int x2, int y2, out int ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetScreenDataBmp(IntPtr handle, int x1, int y1, int x2, int y2, out int size, out int ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern void OpGetScreenFrameInfo(IntPtr handle, out int frame_id, out int time);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetSpecialWindow(IntPtr handle, int flag);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern IntPtr OpGetWindow(IntPtr handle, IntPtr hwnd, int flag);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetWindowClass(IntPtr handle, IntPtr hwnd);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWindowProcessId(IntPtr handle, IntPtr hwnd);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetWindowProcessPath(IntPtr handle, IntPtr hwnd);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWindowRect(IntPtr handle, IntPtr hwnd, out int x1, out int y1, out int x2, out int y2);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWindowState(IntPtr handle, IntPtr hwnd, int flag);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetWindowTitle(IntPtr handle, IntPtr hwnd);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetWordPreview(IntPtr handle, string dict_info, out int ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWordResultCount(IntPtr handle, string result);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpGetWordResultPos(IntPtr handle, string result, int index, out int x, out int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetWordResultStr(IntPtr handle, string result, int index);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpGetWordsNoDict(IntPtr handle, int x1, int y1, int x2, int y2, string color);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpHWheel(IntPtr handle, int delta);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpInjectDll(IntPtr handle, string process_name, string dll_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpIsBind(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpKeyDown(IntPtr handle, int vk_code);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpKeyDownChar(IntPtr handle, string vk_code);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpKeyPress(IntPtr handle, int vk_code);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpKeyPressChar(IntPtr handle, string vk_code);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpKeyPressStr(IntPtr handle, string key_str, int delay);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpKeyUp(IntPtr handle, int vk_code);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpKeyUpChar(IntPtr handle, string vk_code);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLayoutWindows(IntPtr handle, string hwnds, int layout_type, int columns, int start_x, int start_y, int gap_x, int gap_y, int size_mode, int window_width, int window_height, int anchor_mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLeftClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLeftDoubleClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLeftDown(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLeftUp(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLoadMemPic(IntPtr handle, string file_name, IntPtr data, int size);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLoadPic(IntPtr handle, string file_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpLockInput(IntPtr handle, int lock_);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpMatchPicName(IntPtr handle, string pic_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMiddleClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMiddleDoubleClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMiddleDown(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMiddleUp(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMovePath(IntPtr handle, string path, int duration);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMoveR(IntPtr handle, int x, int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMoveTo(IntPtr handle, int x, int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpMoveToEx(IntPtr handle, int x, int y, int w, int h);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpMoveToExSmooth(IntPtr handle, int x, int y, int w, int h, int duration);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMoveToSmooth(IntPtr handle, int x, int y, int duration);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpMoveWindow(IntPtr handle, IntPtr hwnd, int x, int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpNormalizeWordDict(IntPtr handle, string dict_info, out int ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpOcr(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpOcrAuto(IntPtr handle, int x1, int y1, int x2, int y2, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpOcrAutoFromFile(IntPtr handle, string file_name, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpOcrEx(IntPtr handle, int x1, int y1, int x2, int y2, string color, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpOcrFromFile(IntPtr handle, string file_name, string color_format, double sim);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpReadData(IntPtr handle, IntPtr hwnd, string address, int size);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpReadDouble(IntPtr handle, IntPtr hwnd, string address, out double ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpReadFloat(IntPtr handle, IntPtr hwnd, string address, out float ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpReadInt(IntPtr handle, IntPtr hwnd, string address, int type, out long ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpReadString(IntPtr handle, IntPtr hwnd, string address, int type, int len);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpRenameWordDict(IntPtr handle, string dict_info, string words, out int ret);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpRightClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpRightDoubleClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpRightDown(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpRightUp(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpRunApp(IntPtr handle, string cmdline, int mode, out uint pid);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSaveDict(IntPtr handle, int idx, string file_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpScreenToClient(IntPtr handle, IntPtr hwnd, ref int x, ref int y);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSendPaste(IntPtr handle, IntPtr hwnd);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSendString(IntPtr handle, IntPtr hwnd, string str);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSendStringIme(IntPtr handle, IntPtr hwnd, string str);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetBinaryPreprocess(IntPtr handle, int mode, int isolated_threshold, int min_component_area, int bridge_gap);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetClientSize(IntPtr handle, IntPtr hwnd, int width, int hight);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetClipboard(IntPtr handle, string str);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetDict(IntPtr handle, int idx, string file_name);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetDisplayInput(IntPtr handle, string mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetKeypadDelay(IntPtr handle, string type, int delay);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetMemDict(IntPtr handle, int idx, IntPtr data, int size);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetMouseDelay(IntPtr handle, string type, int delay);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetMouseTrajectory(IntPtr handle, int mode, int min_duration, int max_duration, int jitter, int start_delay, int end_delay);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetOcrEngine(IntPtr handle, string path_of_engine, string dll_name, string argv);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetPath(IntPtr handle, string path);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetScreenDataMode(IntPtr handle, int mode);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetShowErrorMsg(IntPtr handle, int show_type);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetWindowSize(IntPtr handle, IntPtr hwnd, int width, int height);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetWindowState(IntPtr handle, IntPtr hwnd, int flag);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetWindowText(IntPtr handle, IntPtr hwnd, string title);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetWindowTransparent(IntPtr handle, IntPtr hwnd, int trans);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSetYoloEngine(IntPtr handle, string path_of_engine, string dll_name, string argv);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpSleep(IntPtr handle, int millseconds);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpUnBindWindow(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpUseDict(IntPtr handle, int idx);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpVer();
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWaitKey(IntPtr handle, int vk_code, int time_out);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWheel(IntPtr handle, int delta);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWheelDown(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWheelUp(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWinExec(IntPtr handle, string cmdline, int cmdshow);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWriteData(IntPtr handle, IntPtr hwnd, string address, string data, int size);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWriteDouble(IntPtr handle, IntPtr hwnd, string address, double value);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWriteFloat(IntPtr handle, IntPtr hwnd, string address, float value);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWriteInt(IntPtr handle, IntPtr hwnd, string address, int type, long value);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpWriteString(IntPtr handle, IntPtr hwnd, string address, int type, string value);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton1Click(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton1DoubleClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton1Down(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton1Up(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton2Click(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton2DoubleClick(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton2Down(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern int OpXButton2Up(IntPtr handle);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpYoloDetect(IntPtr handle, int x1, int y1, int x2, int y2, double conf, double iou);
 
-    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
     private static extern string OpYoloDetectFromFile(IntPtr handle, string file_name, double conf, double iou);
 
     #endregion

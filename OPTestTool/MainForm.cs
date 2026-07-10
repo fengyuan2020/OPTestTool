@@ -1063,6 +1063,7 @@ namespace OPTestTool
             string opExportRoot = Path.Combine(Application.StartupPath, "OpExport");
             string templateFolder = Path.Combine(opExportRoot, "Template");
             string exeFile = Path.Combine(opExportRoot, "OpExport.exe");
+            bool importInProject = false;
             if (!File.Exists(exeFile))
             {
                 MessageBox.Show(string.Format("无法执行,未找到可执行文件\n{0}", exeFile));
@@ -1073,23 +1074,31 @@ namespace OPTestTool
                 MessageBox.Show(string.Format("无法执行,未找到模版文件夹\n{0}", templateFolder));
                 return;
             }
+            if (CheckBox_UseOutProject.Checked && ComboBox_CodeLang.Text.Equals("op_c_api", StringComparison.OrdinalIgnoreCase))
+            {
+                importInProject = MessageBox.Show("是否将生成文件注入外部工程参与编译？", null, buttons: MessageBoxButtons.YesNo) == DialogResult.Yes;
+            }
             string opFolder = Txt_OPFolder.Text;
             if (!CheckBox_UseOutProject.Checked)
             {
+                string tempOldLibopFile = Path.Combine(opFolder, "libop/libop.h");
+                if (File.Exists(tempOldLibopFile))
+                    File.Delete(tempOldLibopFile);
                 string tempProject = Path.Combine(Path.GetTempPath(), "OPProject");
-                string tempLibopFile = Path.Combine(tempProject, "libop/libop.h");
+                string tempLibopFile = Path.Combine(tempProject, "include/libop.h");
                 string tempIdlFile = Path.Combine(tempProject, "libop/com/op.idl");
-                if (!Directory.Exists(Path.GetDirectoryName(tempLibopFile)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(tempLibopFile));
-                if (!Directory.Exists(Path.GetDirectoryName(tempIdlFile)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(tempIdlFile));
+                Directory.CreateDirectory(Path.GetDirectoryName(tempLibopFile));
+                Directory.CreateDirectory(Path.GetDirectoryName(tempIdlFile));
                 if (!File.Exists(tempLibopFile) || File.ReadAllText(tempLibopFile) != Resources.libop)
                     File.WriteAllText(tempLibopFile, Resources.libop);
                 if (!File.Exists(tempIdlFile) || File.ReadAllText(tempIdlFile) != Resources.op)
                     File.WriteAllText(tempIdlFile, Resources.op);
                 opFolder = tempProject;
             }
+            //兼容旧版本libop.h路径
             string libopFile = Path.Combine(opFolder, "libop/libop.h");
+            if (!File.Exists(libopFile))
+                libopFile = Path.Combine(opFolder, "include/libop.h");
             string idlFile = Path.Combine(opFolder, "libop/com/op.idl");
             if (!File.Exists(libopFile))
             {
@@ -1113,7 +1122,7 @@ namespace OPTestTool
                 {
                     string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text);
                     outFileList.Add(outFile);
-                    argsList.Add(string.Format("{0} -t {1} -out {2} -doc {3}", opFolder, template, outFile, CheckBox_AddWifiDoc.Checked));
+                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
                     break;
                 }
                 template = Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_h.sbncs");
@@ -1121,21 +1130,21 @@ namespace OPTestTool
                 {
                     string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text + ".h");
                     outFileList.Add(outFile);
-                    argsList.Add(string.Format("{0} -t {1} -out {2} -doc {3}", opFolder, template, outFile, CheckBox_AddWifiDoc.Checked));
+                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
                 }
                 template = Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_c.sbncs");
                 if (File.Exists(template))
                 {
                     string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text + ".c");
                     outFileList.Add(outFile);
-                    argsList.Add(string.Format("{0} -t {1} -out {2} -doc {3}", opFolder, template, outFile, CheckBox_AddWifiDoc.Checked));
+                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
                 }
                 template = Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_cpp.sbncs");
                 if (File.Exists(template))
                 {
                     string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text + ".cpp");
                     outFileList.Add(outFile);
-                    argsList.Add(string.Format("{0} -t {1} -out {2} -doc {3}", opFolder, template, outFile, CheckBox_AddWifiDoc.Checked));
+                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
                 }
                 break;
             } while (true);
@@ -1151,7 +1160,7 @@ namespace OPTestTool
             if (CheckBox_OpenGenCodeFolder.Checked)
                 Process.Start(new ProcessStartInfo(outFolder) { UseShellExecute = true });
             //对外部工程进行更改
-            if (CheckBox_UseOutProject.Checked && ComboBox_CodeLang.Text.Equals("op", StringComparison.OrdinalIgnoreCase))
+            if (importInProject)
             {
                 string folder = Path.Combine(Path.GetDirectoryName(exeFile), "OP");
                 foreach (var file in outFileList)
@@ -1159,11 +1168,21 @@ namespace OPTestTool
                     if (!File.Exists(file))
                         return;
                 }
+                string dirName = Path.GetFileName(Path.GetDirectoryName(libopFile));
                 foreach (var file in outFileList)
                 {
-                    string des = Path.Combine(opFolder, $"libop/{Path.GetFileName(file)}");
-                    if (!File.Exists(des) || File.ReadAllText(des) != File.ReadAllText(file))
-                        File.Copy(file, des, true);
+                    if (dirName == "libop" || file.EndsWith(".h"))
+                    {
+                        string des = Path.Combine(opFolder, $"{dirName}/{Path.GetFileName(file)}");
+                        if (!File.Exists(des) || File.ReadAllText(des) != File.ReadAllText(file))
+                            File.Copy(file, des, true);
+                    }
+                    else
+                    {
+                        string des = Path.Combine(opFolder, $"libop/c_api/{Path.GetFileName(file)}");
+                        if (!File.Exists(des) || File.ReadAllText(des) != File.ReadAllText(file))
+                            File.Copy(file, des, true);
+                    }
                 }
                 var findCppFile = outFileList.Find(item => item.EndsWith(".cpp"));
                 string makeFile = Path.Combine(opFolder, "libop/CMakeLists.txt");
@@ -1172,7 +1191,7 @@ namespace OPTestTool
                 string[] makeLines = File.ReadAllLines(makeFile);
                 List<string> newMakeLines = new List<string>(makeLines);
                 makeLines = Array.ConvertAll(makeLines, item => item.Trim());
-                if (Array.Exists(makeLines, $"\"{Path.GetFileName(findCppFile)}\"".Equals))
+                if (Array.Exists(makeLines, item => item.Contains($"{Path.GetFileName(findCppFile)}\"")))
                     return;
                 int index = Array.FindIndex(makeLines, "\"libop.cpp\"".Equals);
                 if (index < 0)

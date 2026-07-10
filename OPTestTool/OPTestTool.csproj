@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -87,6 +87,23 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <!-- ResXFileRef链接的文件声明 -->
+  <ItemGroup>
+    <ResLinkedFiles Include="Resources\libop.h" />
+    <ResLinkedFiles Include="Resources\op.idl" />
+    <!-- 告知VS的Fast Up-To-Date Check这些文件也是依赖项 -->
+    <UpToDateCheckInput Include="@(ResLinkedFiles)" />
+  </ItemGroup>
+
+  <!-- 当ResXFileRef链接的文件变化时，touch .resx 强制GenerateResource重新编译资源 -->
+  <Target Name="TouchResxIfLinkedFilesChanged"
+          BeforeTargets="GenerateResource"
+          Inputs="@(ResLinkedFiles)"
+          Outputs="Properties\Resources.resx"
+          Condition="'@(ResLinkedFiles)' != ''">
+    <Touch Files="Properties\Resources.resx" AlwaysCreate="true" />
+  </Target>
 
   <ItemGroup>
     <None Update="Properties\Settings.settings">

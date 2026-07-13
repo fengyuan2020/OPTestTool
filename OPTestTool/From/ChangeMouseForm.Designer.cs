@@ -31,7 +31,6 @@
             groupBox1 = new GroupBox();
             radioButton4 = new RadioButton();
             radioButton3 = new RadioButton();
-            radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
             button1 = new Button();
             button2 = new Button();
@@ -42,7 +41,6 @@
             // 
             groupBox1.Controls.Add(radioButton4);
             groupBox1.Controls.Add(radioButton3);
-            groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
@@ -72,17 +70,6 @@
             radioButton3.TabStop = true;
             radioButton3.Text = "windows";
             radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(6, 49);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(85, 21);
-            radioButton2.TabIndex = 3;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "normal.hd";
-            radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
@@ -140,7 +127,6 @@
         private GroupBox groupBox1;
         private RadioButton radioButton4;
         private RadioButton radioButton3;
-        private RadioButton radioButton2;
         private RadioButton radioButton1;
         private Button button1;
         private Button button2;

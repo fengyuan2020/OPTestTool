@@ -34,11 +34,13 @@
             radioButton1 = new RadioButton();
             button1 = new Button();
             button2 = new Button();
+            radioButton4 = new RadioButton();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(radioButton4);
             groupBox1.Controls.Add(radioButton3);
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
@@ -89,7 +91,7 @@
             button1.Location = new Point(111, 192);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
-            button1.TabIndex = 1;
+            button1.TabIndex = 0;
             button1.Text = "确定";
             button1.UseVisualStyleBackColor = true;
             // 
@@ -99,9 +101,20 @@
             button2.Location = new Point(202, 192);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
-            button2.TabIndex = 2;
+            button2.TabIndex = 1;
             button2.Text = "取消";
             button2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4
+            // 
+            radioButton4.AutoSize = true;
+            radioButton4.Location = new Point(171, 22);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(40, 21);
+            radioButton4.TabIndex = 2;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "dx";
+            radioButton4.UseVisualStyleBackColor = true;
             // 
             // ChangeKeypadForm
             // 
@@ -130,5 +143,6 @@
         private RadioButton radioButton1;
         private Button button1;
         private Button button2;
+        private RadioButton radioButton4;
     }
 }

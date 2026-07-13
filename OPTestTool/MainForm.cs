@@ -1114,40 +1114,19 @@ namespace OPTestTool
             if (!Directory.Exists(outFolder))
                 Directory.CreateDirectory(outFolder);
             List<string> argsList = new List<string>();
-            List<string> outFileList = new List<string>();
-            do
+            string[] templates = new string[] {
+                Path.Combine(templateFolder, ComboBox_CodeLang.Text + ".sbncs"),
+                Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_h.sbncs"),
+                Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_c.sbncs"),
+                Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_cpp.sbncs"),
+            };
+            for (int i = 0; i < templates.Length; ++i)
             {
-                string template = Path.Combine(templateFolder, ComboBox_CodeLang.Text + ".sbncs");
-                if (File.Exists(template))
-                {
-                    string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text);
-                    outFileList.Add(outFile);
-                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
-                    break;
-                }
-                template = Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_h.sbncs");
-                if (File.Exists(template))
-                {
-                    string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text + ".h");
-                    outFileList.Add(outFile);
-                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
-                }
-                template = Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_c.sbncs");
-                if (File.Exists(template))
-                {
-                    string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text + ".c");
-                    outFileList.Add(outFile);
-                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
-                }
-                template = Path.Combine(templateFolder, ComboBox_CodeLang.Text + "_cpp.sbncs");
-                if (File.Exists(template))
-                {
-                    string outFile = Path.Combine(outFolder, ComboBox_CodeLang.Text + ".cpp");
-                    outFileList.Add(outFile);
-                    argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFile}\" -doc {CheckBox_AddWifiDoc.Checked}");
-                }
-                break;
-            } while (true);
+                string template = templates[i];
+                if (!File.Exists(template))
+                    continue;
+                argsList.Add($"\"{libopFile}\" -idl \"{idlFile}\" -t \"{template}\" -out \"{outFolder}\" -doc {CheckBox_AddWifiDoc.Checked}");
+            }
             foreach (var args in argsList)
             {
                 Process process = new Process();
@@ -1162,12 +1141,8 @@ namespace OPTestTool
             //对外部工程进行更改
             if (importInProject)
             {
-                string folder = Path.Combine(Path.GetDirectoryName(exeFile), "OP");
-                foreach (var file in outFileList)
-                {
-                    if (!File.Exists(file))
-                        return;
-                }
+                List<string> outFileList = Directory.GetFiles(outFolder).ToList();
+                outFileList.RemoveAll(item => Path.GetFileNameWithoutExtension(item) != "op_c_api");
                 string dirName = Path.GetFileName(Path.GetDirectoryName(libopFile));
                 foreach (var file in outFileList)
                 {

@@ -346,10 +346,17 @@ namespace OPTestTool
             else if (Win32.GetParent(hwnd) == IntPtr.Zero)
             {
                 string exeFile = opSoft.GetWindowProcessPath((int)hwnd);
-                Icon icon = Icon.ExtractAssociatedIcon(exeFile);
-                if (!node.TreeView.ImageList.Images.Keys.Contains(exeFile))
-                    node.TreeView.ImageList.Images.Add(exeFile, icon);
-                node.ImageKey = exeFile;
+                if (string.IsNullOrWhiteSpace(exeFile))
+                { 
+                    node.ImageKey = Win32.IsWindowVisible(hwnd) ? "Window" : "HiddenWindow";
+                }
+                else
+                {
+                    Icon icon = Icon.ExtractAssociatedIcon(exeFile);
+                    if (!node.TreeView.ImageList.Images.Keys.Contains(exeFile))
+                        node.TreeView.ImageList.Images.Add(exeFile, icon);
+                    node.ImageKey = exeFile;
+                }
             }
             else
             {
